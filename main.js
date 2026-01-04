@@ -224,40 +224,34 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
 
-        let w, h;
-        const resize = () => {
-            w = canvas.width = blueMorph.clientWidth;
-            h = canvas.height = blueMorph.clientHeight;
-        };
-        window.addEventListener('resize', resize);
-        // Also resize when blueMorph changes size (e.g. scroll) - utilizing ResizeObserver
-        new ResizeObserver(resize).observe(blueMorph);
-        resize();
+        let w = 0;
+        let h = 0;
 
-        // Polygon Config - Slower, bigger shapes
+        // Polygon Config - Faster, fewer shapes
         const polys = [];
-        const count = 6; // More shapes including huge circle
+        const count = 4; // Fewer shapes including huge circle
         for (let i = 0; i < count; i++) {
             const isHugeCircle = i === 0; // First one is huge circle
             polys.push({
                 x: isHugeCircle ? 50 : Math.random() * 100, // Percent
                 y: isHugeCircle ? 50 : Math.random() * 100,
-                radius: isHugeCircle ? 220 : (50 + Math.random() * 90), // Huge circle or triangles
+                radius: isHugeCircle ? 220 : (45 + Math.random() * 80), // Huge circle or triangles
                 angle: Math.random() * Math.PI * 2,
-                v: (Math.random() - 0.5) * 0.015, // Much slower velocity
+                v: (Math.random() - 0.5) * 0.02, // Faster rotation velocity
                 hue: Math.random() > 0.5 ? 220 : 340, // Blue or Red/Magenta
                 alpha: isHugeCircle ? 0.18 : (0.08 + Math.random() * 0.22),
                 isCircle: isHugeCircle
             });
         }
 
-        function draw() {
+        function render() {
+            if (!w || !h) return;
             ctx.clearRect(0, 0, w, h);
             // Global Composite?
             ctx.globalCompositeOperation = 'lighter'; // Additive blending for "glow"
 
             polys.forEach(p => {
-                p.angle += p.v * 0.002; // Much slower rotation
+                p.angle += p.v; // Faster rotation
 
                 // Oscillate positions slightly
                 const cx = (p.x / 100) * w;
@@ -283,7 +277,24 @@
                 ctx.closePath();
                 ctx.fill();
             });
+        }
 
+        const resize = () => {
+            const nextW = Math.max(1, blueMorph.clientWidth);
+            const nextH = Math.max(1, blueMorph.clientHeight);
+            if (nextW === w && nextH === h) return;
+            w = canvas.width = nextW;
+            h = canvas.height = nextH;
+            render();
+        };
+
+        window.addEventListener('resize', resize);
+        // Also resize when blueMorph changes size (e.g. scroll) - utilizing ResizeObserver
+        new ResizeObserver(resize).observe(blueMorph);
+        resize();
+
+        function draw() {
+            render();
             requestAnimationFrame(draw);
         }
         draw();
