@@ -20,19 +20,28 @@
 
     <!-- Синий блок (морфинг) -->
     <div class="blueMorph interactive-bg" id="blueMorph">
-        <div class="abstract-container"></div>
+        <canvas id="bgCanvas"></canvas>
     </div>
 
     <!-- Контент синего блока (плавающий оверлей) -->
     <div class="blueOverlay" id="blueOverlay">
         <div class="menuRow">
-            <div class="brand"><b>asar</b>.consulting</div>
-            <nav class="nav" aria-label="Меню">
+            <div class="brand" id="brandLogo" style="cursor: pointer;"><b>asar</b>.consulting</div>
+            <nav class="nav" id="mainNav" aria-label="Меню">
                 <a href="#">Главная</a>
                 <a href="#">Решения</a>
                 <a href="#">Ресурсы</a>
                 <a href="#">Компания</a>
-                <a href="#" class="lang-toggle">🌐</a>
+                <div class="lang-selector">
+                    <a href="#" class="lang-toggle" id="langToggle">
+                        <img src="lang_icon.png" alt="Lang" class="lang-icon">
+                    </a>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <a href="#" data-lang="ru">Русский</a>
+                        <a href="#" data-lang="uz">Узбекский</a>
+                        <a href="#" data-lang="en">English</a>
+                    </div>
+                </div>
             </nav>
         </div>
         <div class="overlayCopy" id="overlayCopy">
@@ -48,25 +57,8 @@
 
             <!-- Sheet 1 -->
             <section class="sheet" data-index="0" style="z-index: 50;">
-                <div class="heroInSheet interactive-bg" id="heroInSheet">
-                    <div class="abstract-container"></div>
-                    <div class="menuRow">
-                        <div class="brand"><b>asar</b>.consulting</div>
-                        <nav class="nav">
-                            <a href="#">Главная</a>
-                            <a href="#">Решения</a>
-                            <a href="#">Ресурсы</a>
-                            <a href="#">Компания</a>
-                        </nav>
-                    </div>
-                    <div class="heroCopy">
-                        <h1>Принимайте бизнес решения <br> на основании цифр</h1>
-                        <p>Управленческий учет, казначейство, бюджетирование, бухгалтерию и контроль — все в едином
-                            подходе.</p>
-                    </div>
-                </div>
-
-                <div class="belowHero content-grid">
+                <div class="belowHero content-grid first-card-content"
+                    style="height: 100%; padding-top: 65%; padding-bottom: 40px; align-items: flex-start;">
                     <div class="card-left">
                         <div class="kicker">О компании</div>
                         <h2>Прозрачная финансовая инфраструктура</h2>
@@ -186,6 +178,16 @@
                         <button class="btn btn-primary">Заказать звонок</button>
                     </div>
                     <div class="card-number">8/8</div>
+                </div>
+            </section>
+
+            <!-- New Footer Sheet -->
+            <section class="sheet" data-index="8" style="z-index: 42;">
+                <div class="sheetInner" style="text-align: center;">
+                    <h2 class="card-title">Узнайте больше о наших услугах</h2>
+                    <div class="card-actions" style="justify-content: center; margin-top: 20px;">
+                        <button class="btn btn-secondary">Подробнее</button>
+                    </div>
                 </div>
             </section>
 

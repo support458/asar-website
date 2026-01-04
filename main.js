@@ -8,7 +8,6 @@
     const blueMorph = document.getElementById('blueMorph');
     const blueOverlay = document.getElementById('blueOverlay');
     const overlayCopy = document.getElementById('overlayCopy');
-    const heroInSheet = document.getElementById('heroInSheet');
 
     let vh = 1;
     let ticking = false;
@@ -88,9 +87,6 @@
         overlayCopy.style.opacity = clamp01(1 - p * 3).toFixed(3);
         overlayCopy.style.transform = `translateY(${-p * 30}px)`;
 
-        // Show hero content, it is now aligned to bottom
-        heroInSheet.style.opacity = '1';
-
         // 2. Sheets Logic
         const stackOffset = 8; // Pixels to shift each card down
 
@@ -149,64 +145,151 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', layout, { passive: true });
 
-    // Mouse follow effect for header gradient
+    // Mouse follow effect for header gradient - Fixed to Top Edge
     window.addEventListener('mousemove', (e) => {
         const x = e.clientX;
-        const y = e.clientY;
+        // const y = e.clientY; // Unused for Y gradient
 
-        // Update variables for both the morphing bar and the hero background
-        const targets = [blueMorph, heroInSheet];
+        // Update gradient position on blueMorph
+        const rect = blueMorph.getBoundingClientRect();
+        const relX = ((x - rect.left) / rect.width) * 100;
 
-        targets.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            // Check if mouse is somewhat near or if header is active
-            const relX = ((x - rect.left) / rect.width) * 100;
-            const relY = ((y - rect.top) / rect.height) * 100;
-
-            el.style.setProperty('--m-x', `${relX}%`);
-            el.style.setProperty('--m-y', `${relY}%`);
-        });
+        // "Attached to top edge" -> Y is 0%
+        blueMorph.style.setProperty('--m-x', `${relX}%`);
+        blueMorph.style.setProperty('--m-y', `0%`);
     });
 
-    // Abstract Antigravity-style Animation
-    function initAbstractAnimation() {
-        const containers = document.querySelectorAll('.abstract-container');
+    // Language menu toggle
+    const langToggle = document.getElementById('langToggle');
+    const langDropdown = document.getElementById('langDropdown');
 
-        containers.forEach(container => {
-            const blobCount = 4;
-            for (let i = 0; i < blobCount; i++) {
-                const blob = document.createElement('div');
-                blob.className = 'blob';
+    if (langToggle && langDropdown) {
+        const closeLang = () => langDropdown.classList.remove('open');
 
-                const size = 150 + Math.random() * 250;
-                blob.style.width = size + 'px';
-                blob.style.height = size + 'px';
+        langToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            langDropdown.classList.toggle('open');
+        });
 
-                blob.style.left = (Math.random() * 100) + '%';
-                blob.style.top = (Math.random() * 100) + '%';
+        langDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
 
-                container.appendChild(blob);
+        langDropdown.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                closeLang();
+            });
+        });
 
-                // Animate floating with weightless organic motion
-                const dur = 15000 + Math.random() * 20000;
-                const delay = Math.random() * -30000;
+        document.addEventListener('click', (e) => {
+            if (!langDropdown.contains(e.target) && !langToggle.contains(e.target)) {
+                closeLang();
+            }
+        });
 
-                blob.animate([
-                    { transform: 'translate(0, 0) scale(1)' },
-                    { transform: `translate(${Math.random() * 150 - 75}px, ${Math.random() * 150 - 75}px) scale(${1.1 + Math.random() * 0.3})` },
-                    { transform: `translate(${Math.random() * 150 - 75}px, ${Math.random() * 150 - 75}px) scale(${0.8 + Math.random() * 0.2})` },
-                    { transform: 'translate(0, 0) scale(1)' }
-                ], {
-                    duration: dur,
-                    iterations: Infinity,
-                    delay: delay,
-                    easing: 'ease-in-out'
-                });
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLang();
             }
         });
     }
 
-    initAbstractAnimation();
+    // Mobile Menu Logic
+    const brand = document.getElementById('brandLogo');
+    const nav = document.getElementById('mainNav');
+
+    if (brand && nav) {
+        brand.addEventListener('click', (e) => {
+            if (window.innerWidth <= 900) {
+                e.preventDefault();
+                const isExpanded = blueMorph.classList.contains('expanded');
+
+                if (isExpanded) {
+                    blueMorph.classList.remove('expanded');
+                    blueOverlay.classList.remove('expanded');
+                    nav.classList.remove('open');
+                } else {
+                    blueMorph.classList.add('expanded');
+                    blueOverlay.classList.add('expanded');
+                    nav.classList.add('open');
+                }
+            }
+        });
+    }
+
+    // Dynamic Texture Animation (Canvas)
+    function initCanvasAnimation() {
+        const canvas = document.getElementById('bgCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        let w, h;
+        const resize = () => {
+            w = canvas.width = blueMorph.clientWidth;
+            h = canvas.height = blueMorph.clientHeight;
+        };
+        window.addEventListener('resize', resize);
+        // Also resize when blueMorph changes size (e.g. scroll) - utilizing ResizeObserver
+        new ResizeObserver(resize).observe(blueMorph);
+        resize();
+
+        // Polygon Config - Slower, bigger shapes
+        const polys = [];
+        const count = 6; // More shapes including huge circle
+        for (let i = 0; i < count; i++) {
+            const isHugeCircle = i === 0; // First one is huge circle
+            polys.push({
+                x: isHugeCircle ? 50 : Math.random() * 100, // Percent
+                y: isHugeCircle ? 50 : Math.random() * 100,
+                radius: isHugeCircle ? 220 : (50 + Math.random() * 90), // Huge circle or triangles
+                angle: Math.random() * Math.PI * 2,
+                v: (Math.random() - 0.5) * 0.015, // Much slower velocity
+                hue: Math.random() > 0.5 ? 220 : 340, // Blue or Red/Magenta
+                alpha: isHugeCircle ? 0.18 : (0.08 + Math.random() * 0.22),
+                isCircle: isHugeCircle
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            // Global Composite?
+            ctx.globalCompositeOperation = 'lighter'; // Additive blending for "glow"
+
+            polys.forEach(p => {
+                p.angle += p.v * 0.002; // Much slower rotation
+
+                // Oscillate positions slightly
+                const cx = (p.x / 100) * w;
+                const cy = (p.y / 100) * h;
+                const r = (p.radius / 100) * Math.min(w, h) * 2; // Large
+
+                ctx.fillStyle = `hsla(${p.hue}, 80%, 50%, ${p.alpha})`;
+
+                ctx.beginPath();
+                if (p.isCircle) {
+                    // Draw huge circle
+                    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                } else {
+                    // Triangle
+                    for (let k = 0; k < 3; k++) {
+                        const theta = p.angle + k * (Math.PI * 2 / 3);
+                        const px = cx + Math.cos(theta) * r;
+                        const py = cy + Math.sin(theta) * r;
+                        if (k === 0) ctx.moveTo(px, py);
+                        else ctx.lineTo(px, py);
+                    }
+                }
+                ctx.closePath();
+                ctx.fill();
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
+
+    initCanvasAnimation();
 
     layout();
 })();
