@@ -1,306 +1,401 @@
-(function () {
-    const GAP_PX = 48;
-    const APPROACH_FACTOR = 0.5;
+﻿(() => {
+  const SUPPORTED_LANGS = new Set(["ru", "uz", "en", "zh"]);
+  const LANG_LABELS = { ru: "RU", uz: "UZ", en: "EN", zh: "中文" };
 
-    const sheets = Array.from(document.querySelectorAll('.sheet'));
-    const spacer = document.getElementById('spacer');
-
-    const blueMorph = document.getElementById('blueMorph');
-    const blueOverlay = document.getElementById('blueOverlay');
-    const overlayCopy = document.getElementById('overlayCopy');
-
-    let vh = 1;
-    let ticking = false;
-
-    const clamp01 = (x) => Math.max(0, Math.min(1, x));
-    const lerp = (a, b, t) => a + (b - a) * t;
-
-    function transitionParams() {
-        const startOffset = APPROACH_FACTOR * vh;
-        const holdFrac = clamp01(GAP_PX / Math.max(1, startOffset));
-        const tOff = 1 - holdFrac;
-        return { startOffset, holdFrac, tOff };
+  const I18N = {
+    en: {
+      "common.skip": "Skip to content",
+      "common.language": "Language",
+      "nav.home": "Home",
+      "nav.solutions": "Solutions",
+      "nav.resources": "Resources",
+      "nav.company": "Company",
+      "footer.copy": "Financial infrastructure for stable and manageable business growth.",
+      "footer.rights": "© 2026 ASAR. All rights reserved.",
+      "home.hero.kicker": "Financial growth architecture",
+      "home.hero.title": "Make decisions based on numbers, not assumptions",
+      "home.hero.lead": "We build management finance systems: transparent cash flow, KPI control, and predictable profitability.",
+      "home.hero.ctaPrimary": "View solutions",
+      "home.hero.ctaSecondary": "Get consultation",
+      "home.card6.ctaPrimary": "Choose service model",
+      "home.card6.ctaSecondary": "Send request",
+      "solutions.hero.kicker": "Financial management solutions",
+      "solutions.hero.title": "Financial support and consulting for your business goals",
+      "solutions.hero.lead": "Choose ongoing support or project consulting and gain clarity, predictability, and profit control.",
+      "solutions.cta.title": "Ready to build a financial operating system for your business?",
+      "solutions.cta.button": "Discuss project",
+      "resources.hero.kicker": "Resource center",
+      "resources.hero.title": "Guidelines, templates, articles, and blog in one hub",
+      "resources.hero.lead": "Useful materials for clients and teams building systematic finance management.",
+      "resources.search.placeholder": "Search resources",
+      "resources.search.button": "Search",
+      "resources.filter.all": "All",
+      "resources.filter.guideline": "Guidelines",
+      "resources.filter.template": "Templates",
+      "resources.filter.article": "Articles",
+      "resources.filter.blog": "Blog",
+      "resources.list.title": "Materials",
+      "resources.auto.title": "Blog automation via Google Drive and Google Docs",
+      "resources.auto.lead": "Authors write in Google Docs, and the website syncs text, images, and metadata automatically.",
+      "resources.cta.title": "Need templates tailored to your business?",
+      "resources.cta.button": "Request materials",
+      "company.hero.kicker": "About company",
+      "company.hero.title": "We build a financial culture where data enables strong decisions",
+      "company.hero.lead": "We act as a delivery partner: not only recommendations, but implementation.",
+      "company.values.title": "Our values",
+      "company.approach.title": "How we work",
+      "company.jobs.title": "Careers",
+      "company.contact.title": "Contacts and feedback",
+      "company.contact.copy": "Send your task and we will propose the right collaboration model.",
+      "company.contact.name": "Name",
+      "company.contact.email": "Email",
+      "company.contact.message": "Message",
+      "company.contact.send": "Send request"
+    },
+    uz: {
+      "common.skip": "Kontentga o'tish",
+      "common.language": "Til",
+      "nav.home": "Asosiy",
+      "nav.solutions": "Yechimlar",
+      "nav.resources": "Resurslar",
+      "nav.company": "Kompaniya",
+      "footer.copy": "Barqaror va boshqariladigan biznes o'sishi uchun moliyaviy infratuzilma.",
+      "footer.rights": "© 2026 ASAR. Barcha huquqlar himoyalangan.",
+      "home.hero.kicker": "O'sish uchun moliyaviy arxitektura",
+      "home.hero.title": "Qarorlarni taxmin bilan emas, raqamlar asosida qabul qiling",
+      "home.hero.lead": "Shaffof cash flow, KPI nazorati va rentabellik uchun boshqaruv moliya tizimini quramiz.",
+      "home.hero.ctaPrimary": "Yechimlarni ko'rish",
+      "home.hero.ctaSecondary": "Konsultatsiya olish",
+      "home.card6.ctaPrimary": "Xizmat formatini tanlash",
+      "home.card6.ctaSecondary": "So'rov qoldirish",
+      "solutions.hero.kicker": "Moliyaviy boshqaruv yechimlari",
+      "solutions.hero.title": "Biznes maqsadlari uchun moliyaviy hamrohlik va konsalting",
+      "solutions.hero.lead": "Doimiy hamrohlik yoki loyiha konsaltingini tanlang va natijalarni nazorat qiling.",
+      "solutions.cta.title": "Biznesingiz uchun moliyaviy tizimni qurishga tayyormisiz?",
+      "solutions.cta.button": "Loyihani muhokama qilish",
+      "resources.hero.kicker": "Resurs markazi",
+      "resources.hero.title": "Qo'llanmalar, shablonlar, maqolalar va blog bitta markazda",
+      "resources.hero.lead": "Mijozlar va jamoalar uchun foydali moliyaviy materiallar.",
+      "resources.search.placeholder": "Materiallardan qidirish",
+      "resources.search.button": "Qidirish",
+      "resources.filter.all": "Barchasi",
+      "resources.filter.guideline": "Qo'llanmalar",
+      "resources.filter.template": "Shablonlar",
+      "resources.filter.article": "Maqolalar",
+      "resources.filter.blog": "Blog",
+      "resources.list.title": "Materiallar",
+      "resources.auto.title": "Google Drive va Google Docs orqali blogni avtomatlashtirish",
+      "resources.auto.lead": "Muallif Google Docs'da yozadi, sayt esa matn, rasm va meta ma'lumotlarni avtomatik yuklaydi.",
+      "resources.cta.title": "Biznesingizga mos shablonlar kerakmi?",
+      "resources.cta.button": "Materiallarni so'rash",
+      "company.hero.kicker": "Kompaniya haqida",
+      "company.hero.title": "Raqamlar kuchli qarorlar qabul qilishga yordam beradigan moliyaviy madaniyatni quramiz",
+      "company.hero.lead": "Faqat tavsiya emas, amaliy joriy etish bilan ishlaymiz.",
+      "company.values.title": "Bizning qadriyatlar",
+      "company.approach.title": "Ishga yondashuvimiz",
+      "company.jobs.title": "Vakansiyalar",
+      "company.contact.title": "Kontaktlar va qayta aloqa",
+      "company.contact.copy": "Vazifangizni yozing, sizga mos hamkorlik formatini taklif qilamiz.",
+      "company.contact.name": "Ism",
+      "company.contact.email": "Email",
+      "company.contact.message": "Xabar",
+      "company.contact.send": "So'rov yuborish"
+    },
+    zh: {
+      "common.skip": "跳到内容",
+      "common.language": "语言",
+      "nav.home": "首页",
+      "nav.solutions": "解决方案",
+      "nav.resources": "资源",
+      "nav.company": "公司",
+      "footer.copy": "为企业稳定增长提供财务基础设施。",
+      "footer.rights": "© 2026 ASAR。保留所有权利。",
+      "home.hero.kicker": "增长型财务架构",
+      "home.hero.title": "基于数据而非直觉做决策",
+      "home.hero.lead": "我们搭建管理型财务体系：透明现金流、KPI控制和可预测盈利。",
+      "home.hero.ctaPrimary": "查看方案",
+      "home.hero.ctaSecondary": "获取咨询",
+      "home.card6.ctaPrimary": "选择服务模式",
+      "home.card6.ctaSecondary": "提交需求",
+      "solutions.hero.kicker": "财务管理解决方案",
+      "solutions.hero.title": "面向企业目标的财务陪跑与咨询",
+      "solutions.hero.lead": "可选择长期支持或项目咨询，获得更清晰、更可控的财务管理。",
+      "solutions.cta.title": "准备好为你的企业搭建财务操作系统了吗？",
+      "solutions.cta.button": "讨论项目",
+      "resources.hero.kicker": "资源中心",
+      "resources.hero.title": "指南、模板、文章与博客一体化平台",
+      "resources.hero.lead": "为客户和团队提供实用的财务管理资料。",
+      "resources.search.placeholder": "搜索资源",
+      "resources.search.button": "搜索",
+      "resources.filter.all": "全部",
+      "resources.filter.guideline": "指南",
+      "resources.filter.template": "模板",
+      "resources.filter.article": "文章",
+      "resources.filter.blog": "博客",
+      "resources.list.title": "资料列表",
+      "resources.auto.title": "通过 Google Drive 与 Google Docs 自动化博客发布",
+      "resources.auto.lead": "作者在 Google Docs 写作，网站自动同步正文、图片和元数据。",
+      "resources.cta.title": "需要适配你业务的模板吗？",
+      "resources.cta.button": "申请资料",
+      "company.hero.kicker": "关于公司",
+      "company.hero.title": "我们打造让数据驱动强决策的财务文化",
+      "company.hero.lead": "我们不仅给建议，更和客户团队一起落地执行。",
+      "company.values.title": "我们的价值观",
+      "company.approach.title": "我们的工作方式",
+      "company.jobs.title": "招聘岗位",
+      "company.contact.title": "联系方式与反馈",
+      "company.contact.copy": "告诉我们你的任务，我们会给出合适的合作方式。",
+      "company.contact.name": "姓名",
+      "company.contact.email": "邮箱",
+      "company.contact.message": "留言",
+      "company.contact.send": "提交"
     }
+  };
 
-    function layout() {
-        vh = Math.max(1, window.innerHeight);
-
-        // +1 screen to allow last sheet to partial reveal footer
-        spacer.style.height = ((sheets.length + 1) * vh) + 'px';
-
-        const initH = Math.round(vh * 0.52);
-        document.documentElement.style.setProperty('--heroH', initH + 'px');
-
-        update();
+  const PAGE_META = {
+    home: {
+      en: { title: "ASAR Consulting | Data-driven financial solutions", description: "Financial support and consulting for business growth." },
+      uz: { title: "ASAR Consulting | Raqamlarga asoslangan moliyaviy yechimlar", description: "Biznes uchun moliyaviy hamrohlik va konsalting." },
+      zh: { title: "ASAR Consulting | 数据驱动的财务解决方案", description: "企业财务陪跑与咨询服务。" }
+    },
+    solutions: {
+      en: { title: "ASAR Consulting | Solutions", description: "Financial support and consulting services." },
+      uz: { title: "ASAR Consulting | Yechimlar", description: "Moliyaviy hamrohlik va konsalting xizmatlari." },
+      zh: { title: "ASAR Consulting | 解决方案", description: "财务陪跑与咨询服务。" }
+    },
+    resources: {
+      en: { title: "ASAR Consulting | Resources", description: "Guidelines, templates, articles and automated blog workflow." },
+      uz: { title: "ASAR Consulting | Resurslar", description: "Qo'llanmalar, shablonlar va avtomatlashtirilgan blog nashri." },
+      zh: { title: "ASAR Consulting | 资源中心", description: "指南、模板、文章与自动化博客发布。" }
+    },
+    company: {
+      en: { title: "ASAR Consulting | Company", description: "Values, jobs, contacts and feedback form." },
+      uz: { title: "ASAR Consulting | Kompaniya", description: "Qadriyatlar, vakansiyalar, kontaktlar va forma." },
+      zh: { title: "ASAR Consulting | 公司", description: "公司价值观、招聘、联系方式与反馈表单。" }
     }
+  };
 
-    function update() {
-        ticking = false;
-        const y = window.scrollY || 0;
+  const page = document.body.dataset.page || "home";
 
-        const { startOffset, tOff } = transitionParams();
+  function getInitialLang() {
+    const params = new URLSearchParams(window.location.search);
+    const queryLang = params.get("lang");
+    if (queryLang && SUPPORTED_LANGS.has(queryLang)) return queryLang;
+    const savedLang = localStorage.getItem("asar_lang");
+    if (savedLang && SUPPORTED_LANGS.has(savedLang)) return savedLang;
+    return "ru";
+  }
 
-        // 1. Blue Header Morph
-        const t = clamp01(y / vh);
-        const p = (tOff > 0) ? Math.min(1, t / tOff) : 1;
+  function getDictionaryValue(lang, key) {
+    const dict = I18N[lang];
+    if (!dict) return null;
+    return dict[key] ?? null;
+  }
 
-        const initH = Math.round(vh * 0.52);
-        const topH = 64; // Matching --topbarH in CSS
-
-        const h = Math.round(lerp(initH, topH, p));
-        blueMorph.style.height = h + 'px';
-        blueOverlay.style.height = h + 'px';
-
-        // Morph to Pill Shape
-        const rStart = 20; // Default radius for the block
-        const rEnd = h / 2; // Full pill shape - capsule
-
-        if (p > 0.01) {
-            const r = lerp(rStart, rEnd, p);
-            blueMorph.style.borderRadius = `${r}px`;
-
-            // Horizontal padding/margins to make it floating pill
-            const marginH = lerp(0, 40, p);
-            blueMorph.style.left = `calc(var(--pad) + ${marginH}px)`;
-            blueMorph.style.right = `calc(var(--pad) + ${marginH}px)`;
-            blueOverlay.style.left = `calc(var(--pad) + ${marginH}px)`;
-            blueOverlay.style.right = `calc(var(--pad) + ${marginH}px)`;
-
-            // Top position adjustment
-            const topPos = lerp(20, 15, p);
-            blueMorph.style.top = `${topPos}px`;
-            blueOverlay.style.top = `${topPos}px`;
-
-            // Add shadow depth in bar mode
-            blueMorph.style.boxShadow = `0 10px 30px rgba(0,0,0,${0.25 + p * 0.15})`;
-        } else {
-            blueMorph.style.borderRadius = `${rStart}px ${rStart}px 0 0`;
-            blueMorph.style.left = `var(--pad)`;
-            blueMorph.style.right = `var(--pad)`;
-            blueOverlay.style.left = `var(--pad)`;
-            blueOverlay.style.right = `var(--pad)`;
-            blueMorph.style.top = `20px`;
-            blueOverlay.style.top = `20px`;
-            blueMorph.style.boxShadow = `0 20px 80px rgba(0, 0, 0, 0.25)`;
-        }
-
-        overlayCopy.style.opacity = clamp01(1 - p * 3).toFixed(3);
-        overlayCopy.style.transform = `translateY(${-p * 30}px)`;
-
-        // 2. Sheets Logic
-        const stackOffset = 8; // Pixels to shift each card down
-
-        sheets.forEach((sheet, i) => {
-            const currentK = Math.floor(y / vh);
-            const p = clamp01((y - currentK * vh) / vh);
-
-            let translateY = 0;
-            let scale = 1;
-            let opacity = 1;
-
-            if (i < currentK) {
-                // Scrolled past: slide up
-                translateY = -vh;
-                opacity = 0;
-            } else if (i === currentK) {
-                // Active top card: slides up based on scroll
-                translateY = -p * vh;
-                scale = 1;
-                opacity = 1;
-                sheet.style.zIndex = 50;
-            } else {
-                // Future cards in the visual stack
-                const stackPos = i - currentK - p;
-
-                // Show up to 5 cards in the stack for visual depth
-                if (stackPos > 5) {
-                    opacity = 0;
-                } else {
-                    opacity = 1;
-                    translateY = stackPos * stackOffset;
-                    scale = 1 - (stackPos * 0.015);
-                }
-                sheet.style.zIndex = 50 - i;
-            }
-
-            sheet.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
-            sheet.style.opacity = opacity;
-
-            // Shadows: top card is most prominent
-            if (i === currentK) {
-                sheet.style.boxShadow = `0 ${20 - p * 10}px ${60 - p * 20}px rgba(0,0,0,0.12)`;
-            } else if (i > currentK) {
-                sheet.style.boxShadow = `0 4px 15px rgba(0,0,0,0.05)`;
-            }
-        });
-    }
-
-    function onScroll() {
-        if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(update);
-        }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', layout, { passive: true });
-
-    // Mouse follow effect for header gradient - Fixed to Top Edge
-    window.addEventListener('mousemove', (e) => {
-        const x = e.clientX;
-        // const y = e.clientY; // Unused for Y gradient
-
-        // Update gradient position on blueMorph
-        const rect = blueMorph.getBoundingClientRect();
-        const relX = ((x - rect.left) / rect.width) * 100;
-
-        // "Attached to top edge" -> Y is 0%
-        blueMorph.style.setProperty('--m-x', `${relX}%`);
-        blueMorph.style.setProperty('--m-y', `0%`);
+  function applyTranslations(lang) {
+    document.querySelectorAll("[data-i18n]").forEach((node) => {
+      const key = node.getAttribute("data-i18n");
+      const value = getDictionaryValue(lang, key);
+      if (value !== null) node.textContent = value;
     });
 
-    // Language menu toggle
-    const langToggle = document.getElementById('langToggle');
-    const langDropdown = document.getElementById('langDropdown');
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+      const key = node.getAttribute("data-i18n-placeholder");
+      const value = getDictionaryValue(lang, key);
+      if (value !== null) node.setAttribute("placeholder", value);
+    });
+  }
 
-    if (langToggle && langDropdown) {
-        const closeLang = () => langDropdown.classList.remove('open');
+  function applyMeta(lang) {
+    const pagePack = PAGE_META[page];
+    const pack = pagePack && pagePack[lang];
+    if (!pack) return;
+    if (pack.title) document.title = pack.title;
+    if (pack.description) {
+      const desc = document.querySelector('meta[name="description"]');
+      if (desc) desc.setAttribute("content", pack.description);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute("content", pack.description);
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute("content", pack.description);
+    }
+  }
 
-        langToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            langDropdown.classList.toggle('open');
-        });
+  function updateLanguageIndicator(lang) {
+    const indicator = document.getElementById("activeLang");
+    if (indicator) indicator.textContent = LANG_LABELS[lang] || "RU";
+    document.documentElement.lang = lang === "zh" ? "zh-Hans" : lang;
+  }
 
-        langDropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+  function updateInternalLinks(lang) {
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+      if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("http://") || href.startsWith("https://")) return;
+      const target = new URL(href, window.location.href);
+      if (target.origin !== window.location.origin) return;
+      target.searchParams.set("lang", lang);
+      link.setAttribute("href", `${target.pathname.split("/").pop()}${target.search}${target.hash}`);
+    });
+  }
 
-        langDropdown.querySelectorAll('a').forEach((link) => {
-            link.addEventListener('click', () => {
-                closeLang();
-            });
-        });
+  function highlightCurrentNav() {
+    document.querySelectorAll(".main-nav a").forEach((link) => link.classList.remove("active"));
+    const current = document.querySelector(`.main-nav a[data-nav="${page}"]`);
+    if (current) current.classList.add("active");
+  }
 
-        document.addEventListener('click', (e) => {
-            if (!langDropdown.contains(e.target) && !langToggle.contains(e.target)) {
-                closeLang();
-            }
-        });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeLang();
-            }
-        });
+  function initMenus() {
+    const menuToggle = document.getElementById("menuToggle");
+    const mainNav = document.getElementById("mainNav");
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener("click", () => {
+        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!expanded));
+        mainNav.classList.toggle("open", !expanded);
+      });
     }
 
-    // Mobile Menu Logic
-    const brand = document.getElementById('brandLogo');
-    const nav = document.getElementById('mainNav');
+    const languageToggle = document.getElementById("languageToggle");
+    const languageMenu = document.getElementById("languageMenu");
+    if (languageToggle && languageMenu) {
+      languageToggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const expanded = languageToggle.getAttribute("aria-expanded") === "true";
+        languageToggle.setAttribute("aria-expanded", String(!expanded));
+        languageMenu.classList.toggle("open", !expanded);
+      });
 
-    if (brand && nav) {
-        brand.addEventListener('click', (e) => {
-            if (window.innerWidth <= 900) {
-                e.preventDefault();
-                const isExpanded = blueMorph.classList.contains('expanded');
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (!languageMenu.contains(target) && !languageToggle.contains(target)) {
+          languageMenu.classList.remove("open");
+          languageToggle.setAttribute("aria-expanded", "false");
+        }
+      });
 
-                if (isExpanded) {
-                    blueMorph.classList.remove('expanded');
-                    blueOverlay.classList.remove('expanded');
-                    nav.classList.remove('open');
-                } else {
-                    blueMorph.classList.add('expanded');
-                    blueOverlay.classList.add('expanded');
-                    nav.classList.add('open');
-                }
-            }
-        });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          languageMenu.classList.remove("open");
+          languageToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+  }
+
+  function initLanguageSwitcher(currentLang) {
+    const languageMenu = document.getElementById("languageMenu");
+    if (!languageMenu) return;
+
+    languageMenu.querySelectorAll("button[data-lang]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextLang = button.getAttribute("data-lang");
+        if (!nextLang || !SUPPORTED_LANGS.has(nextLang)) return;
+
+        localStorage.setItem("asar_lang", nextLang);
+        if (nextLang === currentLang) return;
+
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set("lang", nextLang);
+        window.location.href = nextUrl.toString();
+      });
+    });
+  }
+
+  function initResourceFilters() {
+    const list = document.getElementById("resourceList");
+    if (!list) return;
+
+    const rows = Array.from(list.querySelectorAll(".resource-row"));
+    const filterButtons = Array.from(document.querySelectorAll(".filter-btn[data-resource-filter]"));
+    const searchInput = document.getElementById("resourceSearch");
+
+    let activeFilter = "all";
+    let searchTerm = "";
+
+    function applyFilter() {
+      rows.forEach((row) => {
+        const type = row.getAttribute("data-resource-type");
+        const content = (row.textContent || "").toLowerCase();
+        const filterMatch = activeFilter === "all" || activeFilter === type;
+        const searchMatch = !searchTerm || content.includes(searchTerm);
+        row.hidden = !(filterMatch && searchMatch);
+      });
     }
 
-    // Dynamic Texture Animation (Canvas)
-    function initCanvasAnimation() {
-        const canvas = document.getElementById('bgCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.getAttribute("data-resource-filter") || "all";
+        filterButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        applyFilter();
+      });
+    });
 
-        let w = 0;
-        let h = 0;
-
-        // Polygon Config - Faster, fewer shapes
-        const polys = [];
-        const count = 4; // Fewer shapes including huge circle
-        for (let i = 0; i < count; i++) {
-            const isHugeCircle = i === 0; // First one is huge circle
-            polys.push({
-                x: isHugeCircle ? 50 : Math.random() * 100, // Percent
-                y: isHugeCircle ? 50 : Math.random() * 100,
-                radius: isHugeCircle ? 220 : (45 + Math.random() * 80), // Huge circle or triangles
-                angle: Math.random() * Math.PI * 2,
-                v: (Math.random() - 0.5) * 0.02, // Faster rotation velocity
-                hue: Math.random() > 0.5 ? 220 : 340, // Blue or Red/Magenta
-                alpha: isHugeCircle ? 0.18 : (0.08 + Math.random() * 0.22),
-                isCircle: isHugeCircle
-            });
-        }
-
-        function render() {
-            if (!w || !h) return;
-            ctx.clearRect(0, 0, w, h);
-            // Global Composite?
-            ctx.globalCompositeOperation = 'lighter'; // Additive blending for "glow"
-
-            polys.forEach(p => {
-                p.angle += p.v; // Faster rotation
-
-                // Oscillate positions slightly
-                const cx = (p.x / 100) * w;
-                const cy = (p.y / 100) * h;
-                const r = (p.radius / 100) * Math.min(w, h) * 2; // Large
-
-                ctx.fillStyle = `hsla(${p.hue}, 80%, 50%, ${p.alpha})`;
-
-                ctx.beginPath();
-                if (p.isCircle) {
-                    // Draw huge circle
-                    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-                } else {
-                    // Triangle
-                    for (let k = 0; k < 3; k++) {
-                        const theta = p.angle + k * (Math.PI * 2 / 3);
-                        const px = cx + Math.cos(theta) * r;
-                        const py = cy + Math.sin(theta) * r;
-                        if (k === 0) ctx.moveTo(px, py);
-                        else ctx.lineTo(px, py);
-                    }
-                }
-                ctx.closePath();
-                ctx.fill();
-            });
-        }
-
-        const resize = () => {
-            const nextW = Math.max(1, blueMorph.clientWidth);
-            const nextH = Math.max(1, blueMorph.clientHeight);
-            if (nextW === w && nextH === h) return;
-            w = canvas.width = nextW;
-            h = canvas.height = nextH;
-            render();
-        };
-
-        window.addEventListener('resize', resize);
-        // Also resize when blueMorph changes size (e.g. scroll) - utilizing ResizeObserver
-        new ResizeObserver(resize).observe(blueMorph);
-        resize();
-
-        function draw() {
-            render();
-            requestAnimationFrame(draw);
-        }
-        draw();
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        searchTerm = searchInput.value.trim().toLowerCase();
+        applyFilter();
+      });
     }
 
-    initCanvasAnimation();
+    applyFilter();
+  }
 
-    layout();
+  function initHomeCardMotion() {
+    const cards = Array.from(document.querySelectorAll(".stack-card"));
+    if (!cards.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const revealTrigger = document.getElementById("homeFooterRevealTrigger");
+    const isHomePage = document.body.dataset.page === "home";
+
+    let rafId = 0;
+
+    const update = () => {
+      rafId = 0;
+      const viewport = window.innerHeight || 1;
+      let revealLift = 0;
+
+      if (isHomePage && revealTrigger) {
+        const triggerRect = revealTrigger.getBoundingClientRect();
+        const start = viewport * 0.98;
+        const end = viewport * 0.32;
+        const raw = (start - triggerRect.top) / (start - end);
+        const progress = Math.max(0, Math.min(1, raw));
+        revealLift = progress * viewport * 0.36;
+      }
+
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const offset = (rect.top - viewport * 0.26) / viewport;
+        const clamped = Math.max(-1.3, Math.min(1.3, offset));
+        const translateY = clamped * -16 - revealLift;
+        const rotateX = clamped * 1.8;
+        const scale = 1 - Math.min(Math.abs(clamped) * 0.028, 0.028);
+        card.style.transform = `translateY(${translateY}px) rotateX(${rotateX}deg) scale(${scale})`;
+      });
+    };
+
+    const requestTick = () => {
+      if (!rafId) rafId = window.requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", requestTick, { passive: true });
+    window.addEventListener("resize", requestTick, { passive: true });
+    requestTick();
+  }
+
+  const lang = getInitialLang();
+  localStorage.setItem("asar_lang", lang);
+
+  updateLanguageIndicator(lang);
+  highlightCurrentNav();
+  applyTranslations(lang);
+  applyMeta(lang);
+  updateInternalLinks(lang);
+  initMenus();
+  initLanguageSwitcher(lang);
+  initResourceFilters();
+  initHomeCardMotion();
 })();

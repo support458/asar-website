@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <url>
+        <loc>https://asar.consulting/ru/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+
+    <url>
+        <loc>https://asar.consulting/ru/services/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/services/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/services/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/services/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/services/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/services/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/services/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/services/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/about/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/about/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/about/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/about/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/about/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/about/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/about/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/about/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/contacts/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/contacts/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/contacts/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/contacts/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/contacts/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/contacts/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/contacts/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/contacts/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/insights/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/insights/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+        <url>
+        <loc>https://asar.consulting/ru/for-owners/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/for-owners/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/for-owners/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/for-owners/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/for-owners/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/for-owners/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/for-owners/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/for-owners/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://asar.consulting/ru/startup/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/startup/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/startup/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/startup/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/startup/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/startup/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/startup/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/startup/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/outsource/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/outsource/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/outsource/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/outsource/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/outsource/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/outsource/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/outsource/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/outsource/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/consulting/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/consulting/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/consulting/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/consulting/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/consulting/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/consulting/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/consulting/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/consulting/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/investor/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/investor/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/investor/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/investor/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/investor/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/investor/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/investor/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/investor/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/finance/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/finance/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/finance/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/finance/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/finance/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/finance/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/finance/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/finance/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/accounting/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/accounting/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/accounting/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/accounting/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/accounting/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/accounting/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/accounting/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/accounting/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/procurement/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/procurement/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/procurement/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/procurement/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/procurement/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/procurement/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/procurement/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/procurement/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://asar.consulting/ru/insights-post/implementing-managerial-accounting-without-mistakes/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/implementing-managerial-accounting-without-mistakes/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/implementing-managerial-accounting-without-mistakes/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/implementing-managerial-accounting-without-mistakes/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/insights-post/implementing-managerial-accounting-without-mistakes/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/implementing-managerial-accounting-without-mistakes/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/implementing-managerial-accounting-without-mistakes/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/implementing-managerial-accounting-without-mistakes/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/insights-post/investor-gave-money-no-progress/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/investor-gave-money-no-progress/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/investor-gave-money-no-progress/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/investor-gave-money-no-progress/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/insights-post/investor-gave-money-no-progress/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/investor-gave-money-no-progress/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/investor-gave-money-no-progress/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/investor-gave-money-no-progress/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/insights-post/profit-leaks-through-unseen-gaps/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/profit-leaks-through-unseen-gaps/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/profit-leaks-through-unseen-gaps/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/profit-leaks-through-unseen-gaps/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/insights-post/profit-leaks-through-unseen-gaps/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/profit-leaks-through-unseen-gaps/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/profit-leaks-through-unseen-gaps/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/profit-leaks-through-unseen-gaps/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/insights-post/team-quickly-master-regulations/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/team-quickly-master-regulations/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/team-quickly-master-regulations/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/team-quickly-master-regulations/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/insights-post/team-quickly-master-regulations/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/insights-post/team-quickly-master-regulations/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/insights-post/team-quickly-master-regulations/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/insights-post/team-quickly-master-regulations/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://asar.consulting/ru/legal-notice/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/legal-notice/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/legal-notice/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/legal-notice/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/legal-notice/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/legal-notice/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/legal-notice/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/legal-notice/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/ru/privacy/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/privacy/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/privacy/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/privacy/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://asar.consulting/uz/privacy/</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://asar.consulting/ru/privacy/"/>
+        <xhtml:link rel="alternate" hreflang="uz" href="https://asar.consulting/uz/privacy/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://asar.consulting/ru/privacy/"/>
+        <lastmod>2025-08-11T10:02:00+05:00</lastmod>
+        <priority>0.3</priority>
+    </url>
+
+</urlset>

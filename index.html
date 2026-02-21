@@ -1,200 +1,266 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="ru">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>ASAR Consulting - Бизнес решения на основании цифр</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASAR Consulting | Финансовые решения на основе данных</title>
+  <meta name="description" content="ASAR Consulting помогает бизнесу выстроить финансовое сопровождение и финансовый консалтинг: управленческий учет, cash flow, бюджетирование и контроль рентабельности.">
+  <meta name="keywords" content="финансовый консалтинг, финансовое сопровождение, cash flow, бюджетирование, управленческий учет, ASAR">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://asar.consulting/">
+  <link rel="alternate" hreflang="ru" href="https://asar.consulting/?lang=ru">
+  <link rel="alternate" hreflang="uz" href="https://asar.consulting/?lang=uz">
+  <link rel="alternate" hreflang="en" href="https://asar.consulting/?lang=en">
+  <link rel="alternate" hreflang="zh" href="https://asar.consulting/?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://asar.consulting/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ASAR Consulting | Финансовые решения на основе данных">
+  <meta property="og:description" content="Системное финансовое сопровождение, консалтинг и инструменты контроля прибыли для бизнеса.">
+  <meta property="og:url" content="https://asar.consulting/">
+  <meta property="og:site_name" content="ASAR Consulting">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ASAR Consulting | Финансовые решения на основе данных">
+  <meta name="twitter:description" content="Системное финансовое сопровождение и консалтинг для управляемого роста.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ASAR Consulting",
+    "url": "https://asar.consulting/",
+    "email": "info@asar.consulting",
+    "telephone": "+998774430989",
+    "sameAs": [
+      "https://www.linkedin.com/",
+      "https://t.me/"
+    ]
+  }
+  </script>
 </head>
+<body data-page="home">
+  <a class="skip-link" href="#main-content" data-i18n="common.skip">Перейти к содержанию</a>
 
-<body>
+  <header class="site-header" id="siteHeader">
+    <div class="container header-grid">
+      <a class="brand" href="index.html" aria-label="ASAR Consulting home">
+        <span class="brand-dot">asar</span><span>.consulting</span>
+      </a>
 
-    <!-- Фоновые надписи (вместо футера) -->
-    <div class="bg-info bg-info-left">ООО "ASAR" | 2026</div>
-    <div class="bg-info bg-info-right">info@asar.consulting | +998 (77) 443-09-89</div>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
 
-    <!-- Синий блок (морфинг) -->
-    <div class="blueMorph interactive-bg" id="blueMorph">
-        <canvas id="bgCanvas"></canvas>
+      <nav class="main-nav" id="mainNav" aria-label="Главное меню">
+        <a href="index.html" data-nav="home" data-i18n="nav.home">Главная</a>
+        <a href="solutions.html" data-nav="solutions" data-i18n="nav.solutions">Решения</a>
+        <a href="resources.html" data-nav="resources" data-i18n="nav.resources">Ресурсы</a>
+        <a href="company.html" data-nav="company" data-i18n="nav.company">Компания</a>
+      </nav>
+
+      <div class="language-switcher">
+        <button class="language-toggle" id="languageToggle" aria-expanded="false" aria-controls="languageMenu">
+          <span data-i18n="common.language">Язык</span>
+          <strong id="activeLang">RU</strong>
+        </button>
+        <ul class="language-menu" id="languageMenu" role="listbox">
+          <li><button data-lang="ru">Русский</button></li>
+          <li><button data-lang="uz">O'zbekcha</button></li>
+          <li><button data-lang="en">English</button></li>
+          <li><button data-lang="zh">中文</button></li>
+        </ul>
+      </div>
     </div>
+  </header>
 
-    <!-- Контент синего блока (плавающий оверлей) -->
-    <div class="blueOverlay" id="blueOverlay">
-        <div class="menuRow">
-            <div class="brand" id="brandLogo" style="cursor: pointer;"><b>asar</b>.consulting</div>
-            <nav class="nav" id="mainNav" aria-label="Меню">
-                <a href="#">Главная</a>
-                <a href="#">Решения</a>
-                <a href="#">Ресурсы</a>
-                <a href="#">Компания</a>
-                <div class="lang-selector">
-                    <a href="#" class="lang-toggle" id="langToggle">
-                        <img src="lang_icon.png" alt="Lang" class="lang-icon">
-                    </a>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <a href="#" data-lang="ru">Русский</a>
-                        <a href="#" data-lang="uz">Узбекский</a>
-                        <a href="#" data-lang="en">English</a>
-                    </div>
+  <main id="main-content">
+    <section class="home-stack" aria-label="Карточки с детализацией услуг">
+      <div class="container stack-wrap">
+        <article class="stack-card" data-index="1">
+          <div class="hero-grid hero-grid-card">
+            <div>
+              <p class="hero-kicker" data-i18n="home.hero.kicker">Финансовая архитектура роста</p>
+              <h1 data-i18n="home.hero.title">Принимайте решения на основе цифр, а не догадок</h1>
+              <p class="hero-lead" data-i18n="home.hero.lead">Помогаем малому и среднему бизнесу в Узбекистане: консалтинг, аутсорсинг бизнес-процессов и внедрение управленческого финансового контура.</p>
+              <div class="hero-actions">
+                <a href="solutions.html" class="btn btn-primary" data-i18n="home.hero.ctaPrimary">Посмотреть решения</a>
+                <a href="company.html#contact-form" class="btn btn-ghost" data-i18n="home.hero.ctaSecondary">Получить консультацию</a>
+              </div>
+            </div>
+            <div class="hero-data-slab" aria-label="Ключевые показатели">
+              <p class="slab-label" data-i18n="home.slab.title">Контрольный срез за 90 дней</p>
+              <div class="slab-metrics">
+                <div>
+                  <span data-i18n="home.slab.revenue">Рост выручки</span>
+                  <strong>+18.4%</strong>
                 </div>
-            </nav>
-        </div>
-        <div class="overlayCopy" id="overlayCopy">
-            <h1>Принимайте бизнес решения <br> на основании цифр</h1>
-            <p>Платёжный календарь, управленческие отчёты, бюджеты и контроль исполнения — чтобы решения принимались на
-                цифрах.</p>
-        </div>
+                <div>
+                  <span data-i18n="home.slab.margin">Маржинальность</span>
+                  <strong>24.7%</strong>
+                </div>
+                <div>
+                  <span data-i18n="home.slab.cashGap">Кассовые разрывы</span>
+                  <strong>-63%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="stack-card" data-index="2">
+          <div class="stack-card-head">
+            <p data-i18n="home.card1.kicker">Диагностика финансов</p>
+            <h2 data-i18n="home.card1.title">Прозрачная база для управленческих решений</h2>
+          </div>
+          <p data-i18n="home.card1.copy">Фиксируем и структурируем финансовые потоки, выявляем точки потерь, нормализуем учет и формируем единый источник правды для собственника и команды.</p>
+          <table class="data-table">
+            <caption data-i18n="home.card1.tableCaption">Таблица диагностического среза</caption>
+            <thead>
+              <tr>
+                <th data-i18n="home.card1.col1">Показатель</th>
+                <th data-i18n="home.card1.col2">До проекта</th>
+                <th data-i18n="home.card1.col3">Через 3 месяца</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Cash Accuracy</td><td>61%</td><td>93%</td></tr>
+              <tr><td data-i18n="home.card1.row2">Срок закрытия месяца</td><td>17 <span data-i18n="common.days">дней</span></td><td>5 <span data-i18n="common.days">дней</span></td></tr>
+              <tr><td data-i18n="home.card1.row3">План-факт по расходам</td><td>Нет</td><td data-i18n="common.yes">Да</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="stack-card" data-index="3">
+          <div class="stack-card-head">
+            <p data-i18n="home.card2.kicker">Cash Flow</p>
+            <h2 data-i18n="home.card2.title">Живой прогноз денежных потоков</h2>
+          </div>
+          <p data-i18n="home.card2.copy">Платежный календарь и сценарный прогноз позволяют заранее видеть дефицит, корректировать закупки, выплаты и продажи без кассовых разрывов.</p>
+          <div class="chart-box">
+            <svg viewBox="0 0 460 180" role="img" aria-label="График cash flow">
+              <polyline points="10,130 70,120 130,110 190,122 250,96 310,74 370,70 440,58" class="chart-line positive"></polyline>
+              <polyline points="10,148 70,152 130,146 190,141 250,128 310,122 370,119 440,107" class="chart-line neutral"></polyline>
+              <g class="axis">
+                <line x1="10" y1="160" x2="450" y2="160"></line>
+                <line x1="10" y1="20" x2="10" y2="160"></line>
+              </g>
+            </svg>
+            <div class="chart-legend">
+              <span><i class="dot dot-positive"></i><span data-i18n="home.card2.legendForecast">Прогноз поступлений</span></span>
+              <span><i class="dot dot-neutral"></i><span data-i18n="home.card2.legendPlan">План выплат</span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="stack-card" data-index="4">
+          <div class="stack-card-head">
+            <p data-i18n="home.card3.kicker">Инфографика процесса</p>
+            <h2 data-i18n="home.card3.title">Путь от хаоса к финансовой дисциплине</h2>
+          </div>
+          <ol class="process-line">
+            <li>
+              <strong data-i18n="home.card3.step1Title">Аудит</strong>
+              <span data-i18n="home.card3.step1Copy">Проверяем отчетность, движение денег и систему принятия решений.</span>
+            </li>
+            <li>
+              <strong data-i18n="home.card3.step2Title">Проектирование</strong>
+              <span data-i18n="home.card3.step2Copy">Собираем финмодель, KPI и управленческие регламенты под ваш бизнес.</span>
+            </li>
+            <li>
+              <strong data-i18n="home.card3.step3Title">Внедрение</strong>
+              <span data-i18n="home.card3.step3Copy">Настраиваем отчеты, ритм встреч и контроль исполнения команды.</span>
+            </li>
+            <li>
+              <strong data-i18n="home.card3.step4Title">Контроль</strong>
+              <span data-i18n="home.card3.step4Copy">Еженедельно сверяем факт с планом и корректируем решения в реальном времени.</span>
+            </li>
+          </ol>
+        </article>
+
+        <article class="stack-card" data-index="5">
+          <div class="stack-card-head">
+            <p data-i18n="home.card4.kicker">Сервисная карта</p>
+            <h2 data-i18n="home.card4.title">Услуги, которыми закрываем ключевые бизнес-задачи</h2>
+          </div>
+          <div class="split-info">
+            <div>
+              <h3 data-i18n="home.card4.leftTitle">Операционный контур</h3>
+              <p data-i18n="home.card4.leftCopy">Собрали из старой версии сайта ключевые направления для системной ежедневной работы:</p>
+              <ul class="service-bullets">
+                <li>Аутсорсинг</li>
+                <li>Консалтинг</li>
+                <li>Контроль инвестиций</li>
+                <li>Управленческий учет</li>
+              </ul>
+            </div>
+            <div>
+              <h3 data-i18n="home.card4.rightTitle">Контур роста и качества</h3>
+              <p data-i18n="home.card4.rightCopy">Под задачи собственников, стартапов и команд, которым нужна прозрачность и управляемость:</p>
+              <ul class="service-bullets">
+                <li>Проверка бухгалтерии</li>
+                <li>Процедура закупок</li>
+                <li>Для стартапов</li>
+                <li>Для собственников бизнеса</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="stack-card" data-index="6">
+          <div class="stack-card-head">
+            <p data-i18n="home.card5.kicker">Кейс</p>
+            <h2 data-i18n="home.card5.title">Снижение доли хаотичных расходов за 12 недель</h2>
+          </div>
+          <p data-i18n="home.card5.copy">Компания в сегменте дистрибуции сократила неплановые выплаты, стабилизировала оборотный капитал и получила предсказуемый горизонт решений.</p>
+          <div class="bar-compare" aria-label="Сравнение до и после">
+            <div class="bar-row">
+              <span data-i18n="common.before">До</span>
+              <div class="bar-track"><i style="width: 78%"></i></div>
+              <strong>78%</strong>
+            </div>
+            <div class="bar-row">
+              <span data-i18n="common.after">После</span>
+              <div class="bar-track"><i style="width: 29%"></i></div>
+              <strong>29%</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="stack-card final" data-index="7">
+          <div class="stack-card-head">
+            <p data-i18n="home.card6.kicker">Следующий шаг</p>
+            <h2 data-i18n="home.card6.title">Соберем для вас финансовую систему, которая работает ежедневно</h2>
+          </div>
+          <p data-i18n="home.card6.copy">Запросите бесплатную консультацию: на первой встрече определим текущие ограничения бизнеса, точки роста и формат сотрудничества для вашей команды.</p>
+          <div class="hero-actions">
+            <a href="solutions.html" class="btn btn-primary" data-i18n="home.card6.ctaPrimary">Выбрать формат услуги</a>
+            <a href="company.html#contact-form" class="btn btn-ghost" data-i18n="home.card6.ctaSecondary">Оставить заявку</a>
+          </div>
+        </article>
+      </div>
+      <div class="home-footer-reveal-trigger" id="homeFooterRevealTrigger" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>ASAR Consulting</strong>
+        <p data-i18n="footer.copy">Финансовая инфраструктура для устойчивого и управляемого роста бизнеса.</p>
+      </div>
+      <div>
+        <p><a href="mailto:info@asar.consulting">info@asar.consulting</a></p>
+        <p><a href="tel:+998774430989">+998 (77) 443-09-89</a></p>
+      </div>
+      <div>
+        <p data-i18n="footer.rights">© 2026 ASAR. Все права защищены.</p>
+      </div>
     </div>
+  </footer>
 
-    <!-- Листы (Стейдж) -->
-    <div class="stage" aria-hidden="true">
-        <div class="stack">
-
-            <!-- Sheet 1 -->
-            <section class="sheet" data-index="0" style="z-index: 50;">
-                <div class="belowHero content-grid first-card-content"
-                    style="height: 100%; padding-top: 65%; padding-bottom: 40px; align-items: flex-start;">
-                    <div class="card-left">
-                        <div class="kicker">О компании</div>
-                        <h2>Прозрачная финансовая инфраструктура</h2>
-                        <p><strong>asar.consulting</strong> создаёт системный подход к вашим деньгам. Мы настраиваем
-                            процессы так, чтобы вы видели реальную прибыль и управляли ликвидностью без кассовых
-                            разрывов.</p>
-                    </div>
-                    <div class="card-right">
-                        <div class="card-actions">
-                            <button class="btn btn-primary">Получить консультацию</button>
-                            <button class="btn btn-secondary">Подробнее</button>
-                        </div>
-                    </div>
-                    <div class="card-number">1/8</div>
-                </div>
-            </section>
-
-            <!-- Sheet 2 -->
-            <section class="sheet" data-index="1" style="z-index: 49;">
-                <div class="sheetInner">
-                    <div class="content-grid">
-                        <div class="card-left">
-                            <div class="kicker">Проблема</div>
-                            <h2>Отсутствие системного подхода — причина многих проблем</h2>
-                            <p>Большинство компаний сталкиваются со схожими препятствиями: деньги приходят и уходят
-                                непредсказуемо, отчеты существуют формально, а решения принимаются интуитивно.</p>
-                            <p>Мы устраняем первопричины хаоса, переводя бизнес на финансовую дисциплину.</p>
-                        </div>
-                        <div class="card-right">
-                            <div class="diagram-container">
-                                <div class="bubble">Кассовые разрывы</div>
-                                <div class="bubble">Непрозрачные финансы</div>
-                                <div class="bubble">Ошибки бухгалтеров</div>
-                                <div class="bubble">Хаос в задачах</div>
-                                <div class="bubble">Ошибка себестоимости</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-number">2/8</div>
-                </div>
-            </section>
-
-            <!-- Sheet 3 -->
-            <section class="sheet" data-index="2" style="z-index: 48;">
-                <div class="sheetInner">
-                    <div class="content-grid">
-                        <div class="card-left">
-                            <div class="kicker">Решение</div>
-                            <h2>Системный подход к финансам</h2>
-                            <p>Мы выстраиваем процессы, настраиваем цифры и вводим автоматизацию, которая работает
-                                каждый день без сбоев и человеческих ошибок.</p>
-                        </div>
-                        <div class="card-right">
-                            <p>Результат нашей работы — это четкое понимание прибыльности каждого направления и контроль
-                                каждой копейки в бизнесе.</p>
-                        </div>
-                    </div>
-                    <div class="card-number">3/8</div>
-                </div>
-            </section>
-
-            <!-- Sheet 4 -->
-            <section class="sheet" data-index="3" style="z-index: 47;">
-                <div class="sheetInner">
-                    <div class="content-grid">
-                        <div class="card-left">
-                            <div class="kicker">Инструменты</div>
-                            <h2>Прозрачность и контроль</h2>
-                            <p>Мы внедряем инструменты, которые позволяют видеть реальную картину вашего бизнеса в
-                                режиме реального времени.</p>
-                        </div>
-                        <div class="card-right">
-                            <ul class="features-list">
-                                <li>Автоматизированные отчеты (P&L, CashFlow)</li>
-                                <li>Дашборды для руководителей</li>
-                                <li>Системы контроля затрат и бюджетирование</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-number">4/8</div>
-                </div>
-            </section>
-
-            <!-- Sheet 5-8 can be expanded similarly -->
-            <section class="sheet" data-index="4" style="z-index: 46;">
-                <div class="sheetInner">
-                    <h2 class="card-title">Ваш бизнес на новом уровне эффективности</h2>
-                    <p>С ASAR Consulting вы получаете не просто отчеты, а инструмент для качественного роста и
-                        масштабирования.</p>
-                    <div class="card-number">5/8</div>
-                </div>
-            </section>
-
-            <section class="sheet" data-index="5" style="z-index: 45;">
-                <div class="sheetInner">
-                    <h2 class="card-title">Индивидуальный подход</h2>
-                    <p>Мы глубоко погружаемся в специфику вашего бизнеса, чтобы предложить наиболее эффективные решения,
-                        адаптированные под ваши уникальные потребности.</p>
-                    <div class="card-number">6/8</div>
-                </div>
-            </section>
-
-            <section class="sheet" data-index="6" style="z-index: 44;">
-                <div class="sheetInner">
-                    <h2 class="card-title">Команда экспертов</h2>
-                    <p>Наши специалисты обладают многолетним опытом в области финансового консалтинга и готовы к задачам
-                        любой сложности.</p>
-                    <div class="card-number">7/8</div>
-                </div>
-            </section>
-
-            <section class="sheet" data-index="7" style="z-index: 43;">
-                <div class="sheetInner">
-                    <h2 class="card-title">Начните путь к стабильности сегодня</h2>
-                    <p>Свяжитесь с нами для первичной диагностики вашего финансового состояния.</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Заказать звонок</button>
-                    </div>
-                    <div class="card-number">8/8</div>
-                </div>
-            </section>
-
-            
-        </div>
-    </div>
-
-    <div class="background-cta">
-        <h2 class="card-title">Узнайте больше о наших услугах</h2>
-        <div class="card-actions">
-            <button class="btn btn-secondary">Подробнее</button>
-        </div>
-    </div>
-
-    <div id="spacer"></div>
-
-    <script src="main.js"></script>
+  <script src="main.js"></script>
 </body>
-
 </html>

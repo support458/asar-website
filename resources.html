@@ -1,0 +1,154 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASAR Consulting | Ресурсы: гайдлайны, шаблоны, статьи и блог</title>
+  <meta name="description" content="Полезные материалы ASAR: гайдлайны, шаблоны, статьи и блог. Структура ресурсного центра и автоматизация публикаций из Google Drive и Google Docs.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://asar.consulting/resources">
+  <link rel="alternate" hreflang="ru" href="https://asar.consulting/resources?lang=ru">
+  <link rel="alternate" hreflang="uz" href="https://asar.consulting/resources?lang=uz">
+  <link rel="alternate" hreflang="en" href="https://asar.consulting/resources?lang=en">
+  <link rel="alternate" hreflang="zh" href="https://asar.consulting/resources?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://asar.consulting/resources">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ASAR Consulting | Ресурсный центр">
+  <meta property="og:description" content="Гайды, шаблоны, статьи и блог для собственников, CFO и руководителей.">
+  <meta property="og:url" content="https://asar.consulting/resources">
+  <meta property="og:site_name" content="ASAR Consulting">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "ASAR Resources",
+    "about": "Financial management resources"
+  }
+  </script>
+</head>
+<body data-page="resources">
+  <a class="skip-link" href="#main-content" data-i18n="common.skip">Перейти к содержанию</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-grid">
+      <a class="brand" href="index.html" aria-label="ASAR Consulting home">
+        <span class="brand-dot">asar</span><span>.consulting</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Главное меню">
+        <a href="index.html" data-nav="home" data-i18n="nav.home">Главная</a>
+        <a href="solutions.html" data-nav="solutions" data-i18n="nav.solutions">Решения</a>
+        <a href="resources.html" data-nav="resources" data-i18n="nav.resources">Ресурсы</a>
+        <a href="company.html" data-nav="company" data-i18n="nav.company">Компания</a>
+      </nav>
+
+      <div class="language-switcher">
+        <button class="language-toggle" id="languageToggle" aria-expanded="false" aria-controls="languageMenu">
+          <span data-i18n="common.language">Язык</span>
+          <strong id="activeLang">RU</strong>
+        </button>
+        <ul class="language-menu" id="languageMenu" role="listbox">
+          <li><button data-lang="ru">Русский</button></li>
+          <li><button data-lang="uz">O'zbekcha</button></li>
+          <li><button data-lang="en">English</button></li>
+          <li><button data-lang="zh">中文</button></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main">
+    <section class="hero page-hero resources-hero">
+      <div class="container">
+        <p class="hero-kicker" data-i18n="resources.hero.kicker">Ресурсный центр</p>
+        <h1 data-i18n="resources.hero.title">Гайдлайны, шаблоны, статьи и блог в единой базе знаний</h1>
+        <p class="hero-lead" data-i18n="resources.hero.lead">Материалы для клиентов и всех, кто хочет выстроить системное управление финансами в компании.</p>
+        <div class="resource-search-line">
+          <input type="search" id="resourceSearch" placeholder="Поиск по материалам" data-i18n-placeholder="resources.search.placeholder">
+          <button class="btn btn-primary" type="button" data-i18n="resources.search.button">Найти</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="container resource-filter-strip" aria-label="Фильтры ресурсов">
+      <button class="filter-btn active" data-resource-filter="all" data-i18n="resources.filter.all">Все</button>
+      <button class="filter-btn" data-resource-filter="guideline" data-i18n="resources.filter.guideline">Гайдлайны</button>
+      <button class="filter-btn" data-resource-filter="template" data-i18n="resources.filter.template">Шаблоны</button>
+      <button class="filter-btn" data-resource-filter="article" data-i18n="resources.filter.article">Статьи</button>
+      <button class="filter-btn" data-resource-filter="blog" data-i18n="resources.filter.blog">Блог</button>
+    </section>
+
+    <section class="container resource-list-section">
+      <h2 data-i18n="resources.list.title">Материалы</h2>
+      <div class="resource-list" id="resourceList">
+        <article class="resource-row" data-resource-type="guideline">
+          <span class="resource-tag">Guideline</span>
+          <h3 data-i18n="resources.item1.title">Актуальное о бизнесе и управлении</h3>
+          <p data-i18n="resources.item1.copy">Прикладные материалы о предпринимательстве, управлении и операционной деятельности с фокусом на задачи малого и среднего бизнеса.</p>
+        </article>
+        <article class="resource-row" data-resource-type="template">
+          <span class="resource-tag">Template</span>
+          <h3 data-i18n="resources.item2.title">Шаблон платежного календаря</h3>
+          <p data-i18n="resources.item2.copy">Готовая структура для планирования входящих и исходящих платежей с приоритизацией обязательств.</p>
+        </article>
+        <article class="resource-row" data-resource-type="article">
+          <span class="resource-tag">Article</span>
+          <h3 data-i18n="resources.item3.title">Прибыль утекает через незаметные дыры</h3>
+          <p data-i18n="resources.item3.copy">Пять причин скрытых финансовых потерь: непрозрачный учет, неформальные закупки, неэффективные операции, бонусы и мелкие траты.</p>
+        </article>
+        <article class="resource-row" data-resource-type="blog">
+          <span class="resource-tag">Blog</span>
+          <h3 data-i18n="resources.item4.title">Кейс: как сократить кассовые разрывы в дистрибуции</h3>
+          <p data-i18n="resources.item4.copy">Разбор проекта по стабилизации cash flow: исходная ситуация, внедрение, финальный эффект.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container automation-section">
+      <h2 data-i18n="resources.auto.title">Автоматизация блога через Google Drive и Google Docs</h2>
+      <p data-i18n="resources.auto.lead">Публикации можно обновлять без ручной верстки: команда пишет материал в Google Docs, сайт автоматически синхронизирует текст, изображения и метаданные.</p>
+      <div class="automation-flow">
+        <div><span>1</span><p data-i18n="resources.auto.step1">Автор создает материал в Google Docs по шаблону.</p></div>
+        <div><span>2</span><p data-i18n="resources.auto.step2">Google Sheet хранит slug, язык, категорию, SEO-поля.</p></div>
+        <div><span>3</span><p data-i18n="resources.auto.step3">Скрипт импорта (Drive API + Docs API) выгружает и конвертирует контент.</p></div>
+        <div><span>4</span><p data-i18n="resources.auto.step4">Сайт обновляет материалы, картинки и sitemap автоматически.</p></div>
+      </div>
+      <pre class="code-sample"><code>docs/ -> parser -> /content/{lang}/posts/*.html -> build -> sitemap.xml</code></pre>
+    </section>
+
+    <section class="cta-band">
+      <div class="container cta-band-inner">
+        <h2 data-i18n="resources.cta.title">Нужны шаблоны под вашу отрасль и структуру бизнеса?</h2>
+        <a class="btn btn-primary" href="company.html#contact-form" data-i18n="resources.cta.button">Запросить материалы</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>ASAR Consulting</strong>
+        <p data-i18n="footer.copy">Финансовая инфраструктура для устойчивого и управляемого роста бизнеса.</p>
+      </div>
+      <div>
+        <p><a href="mailto:info@asar.consulting">info@asar.consulting</a></p>
+        <p><a href="tel:+998774430989">+998 (77) 443-09-89</a></p>
+      </div>
+      <div>
+        <p data-i18n="footer.rights">© 2026 ASAR. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

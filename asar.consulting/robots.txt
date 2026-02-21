@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /assets/
+Disallow: /cms/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /preview/
+Disallow: /*?*
+Disallow: /404
+Disallow: /404.html
+Disallow: /ru/gettest
+Allow: /
+
+Sitemap: https://www.asar.consulting/sitemap.xml

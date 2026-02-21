@@ -1,55 +1,159 @@
-# Implementation Plan - ASAR Website
+# План редизайна и развития сайта ASAR
 
-Create a modern, one-page website with GSAP-powered scroll animations, featuring a transforming header and stacking card layout.
+## 1) Цели проекта
+- Полностью переработать визуальный уровень сайта: аккуратная типографика, продуманные состояния, детали и микро-взаимодействия.
+- Сохранить карточную идею на странице `Главная`, но сделать каждую карточку содержательной (графики, таблицы, изображения, текст, инфографика).
+- Спроектировать и реализовать 3 новые страницы в НЕ карточном формате:
+  - `Решения`
+  - `Ресурсы`
+  - `Компания`
+- Внедрить мультиязычность: `ru` (основной), `uz`, `en`, `zh`.
+- Довести SEO до максимально практичного уровня (техническое, контентное, мультиязычное SEO).
 
-## User Requirements
-- Large blue header (full height) transforms into a standard header on scroll.
-- Stacking card effect (panels) where each card "pins" and the next one slides over or reveals.
-- Navigation/pagination indicator (e.g., 1/8).
-- Modern aesthetics inspired by provided screenshots.
-- Technology: HTML5, Vanilla CSS, JavaScript, GSAP + ScrollTrigger.
+## 2) Информационная архитектура
+- `/` - Главная (карточная концепция, улучшенная по контенту и визуалу).
+- `/solutions` - Решения.
+- `/resources` - Ресурсы.
+- `/company` - Компания.
+- Языковые версии:
+  - `/ru/...` (основная)
+  - `/uz/...`
+  - `/en/...`
+  - `/zh/...`
 
-## Proposed Architecture
+## 3) Дизайн-направление по страницам
 
-### 1. HTML Structure
-- `header`: Sticky/Fixed container for the transforming navigation.
-- `main.container`: Wrapper for the scrollable panels.
-- `section.panel`: Individual cards with content.
-- `footer`: Fixed or relative footer as shown in screenshots.
+### 3.1 Главная (оставляем карточки, усиливаем контент)
+- Сохранить эффект стека карточек, но переработать каждую как полноценный блок принятия решения.
+- Состав карточек:
+  - мини-графики (cashflow trend, структура затрат, план/факт),
+  - таблицы KPI (маржинальность, DSO, burn rate и т.д.),
+  - инфографика процесса (диагностика -> внедрение -> контроль),
+  - кейс-вставки “до/после”.
+- Добавить четкую CTA-логику: “получить консультацию”, “посмотреть услуги”, “скачать чек-лист”.
 
-### 2. Styling (CSS)
-- Use a dark/premium color palette (Deep Blue/Purple gradients).
-- "Card" look for sections: white background, rounded corners, subtle shadows.
-- Fixed positioning for the header to handle height transition smoothly.
-- Responsive design (handling 100vh vs 100dvh).
+### 3.2 Решения (НЕ карточный формат)
+- Формат: длинная экспертная страница с “липким” боковым оглавлением + секции.
+- Структура:
+  - hero с позиционированием и сегментацией клиентов,
+  - блок “Какие проблемы решаем” (матрица проблема -> симптом -> решение -> результат),
+  - 2 сервисных секции:
+    - `Финансовое сопровождение`
+    - `Финансовый консалтинг`
+  - блок “Для кого полезно” (по типам бизнеса/этапам роста),
+  - процесс работы (таймлайн 4-6 этапов),
+  - пакетные предложения и/или калькулятор ориентировочной стоимости,
+  - FAQ и финальный CTA.
 
-### 3. Animations (GSAP)
-- `ScrollTrigger` for header: Scale down height from `100vh` to `80px` (or similar).
-- `ScrollTrigger` for panels: Pin each panel as it hits the top, allowing the next to stack.
-- Text animations: Entrance animations for card content.
+### 3.3 Ресурсы (НЕ карточный формат)
+- Формат: knowledge hub (база знаний) с фильтрами, поиском и рубрикатором.
+- Разделы:
+  - `Гайдлайны`
+  - `Шаблоны`
+  - `Статьи`
+  - `Блог`
+- Представление контента: комбинированный список/лента + фильтры по теме, роли, уровню сложности, языку.
+- Отдельная страница материала: содержание, прогресс чтения, блок “связанные материалы”, CTA.
 
-## Steps
+### 3.4 Компания (НЕ карточный формат)
+- Формат: storytelling-страница доверия и найма.
+- Структура:
+  - миссия и ценности,
+  - принципы работы и стандарты качества,
+  - как строится сотрудничество с клиентом (пошагово),
+  - вакансии и карьерный блок,
+  - контакты, форма обратной связи, соцсети, карта/регион работы.
 
-### Phase 1: Setup & Assets
-- [ ] Create `index.html`, `style.css`, and `main.js`.
-- [ ] Import GSAP and ScrollTrigger via CDN.
-- [ ] Setup Google Fonts (Inter).
+## 4) Автоматизация блога (Google Drive/Google Docs)
+Цель: публиковать материалы из Google Docs с сохранением форматирования и изображений.
 
-### Phase 2: Core Layout
-- [ ] Implement the full-screen header structure.
-- [ ] Create multiple content "cards" with placeholder text from screenshots.
-- [ ] Style the cards to match the design (radius, shadow, alignment).
+### Рекомендуемый MVP-пайплайн
+- Источник контента:
+  - папка Google Drive `ASAR Blog`,
+  - документы Google Docs по шаблону,
+  - отдельная Google Sheet с метаданными (slug, язык, категория, дата, author, SEO-поля).
+- Синхронизация (cron/manual):
+  - скрипт выгрузки через Google Drive API + Docs API,
+  - конвертация документа в HTML/Markdown,
+  - извлечение и локальное сохранение изображений,
+  - генерация файлов контента (`/content/{lang}/...`) и индекса материалов.
+- Публикация:
+  - сборка сайта -> новые страницы статей -> автообновление sitemap.
 
-### Phase 3: Header Transformation
-- [ ] Add GSAP animation to transition header height and background.
-- [ ] Ensure content inside header scales/fades out appropriately.
+### Требования к контент-шаблону Docs
+- H1 один на документ, далее H2/H3.
+- Alt-тексты для изображений.
+- Короткий summary (2-3 предложения).
+- SEO-title, meta-description, canonical (в метаданных).
 
-### Phase 4: Card Stacking Effect
-- [ ] Implement the pinning logic using `ScrollTrigger`.
-- [ ] Add `snap` functionality for smooth transitions between cards.
+## 5) Мультиязычность (ru, uz, en, zh)
+- Базовый язык контента: `ru`.
+- Архитектура:
+  - словари UI-строк по языкам,
+  - языковые версии страниц и материалов,
+  - fallback-логика при отсутствии перевода.
+- SEO для языков:
+  - `hreflang` (`ru`, `uz`, `en`, `zh`, `x-default`),
+  - отдельные URL на каждый язык,
+  - каноникал на текущую языковую версию.
 
-### Phase 5: Polish & Content
-- [ ] Replicate text content from images exactly.
-- [ ] Add pagination numbers (1/8, 2/8, etc.).
-- [ ] Add the floating bubbles/elements seen in Image 1.
-- [ ] Finalize responsive adjustments.
+## 6) SEO-стратегия (максимально практично)
+- Техническое SEO:
+  - корректная семантика HTML5,
+  - уникальные title/description на каждую страницу и язык,
+  - Open Graph/Twitter мета,
+  - schema.org (Organization, Service, Article, FAQ),
+  - sitemap.xml, robots.txt, canonical.
+- Контентное SEO:
+  - кластеризация запросов по страницам (услуги/ресурсы/компания),
+  - шаблон структуры статей под intent пользователя,
+  - внутренняя перелинковка между услугами, кейсами и ресурсами.
+- Performance SEO:
+  - Core Web Vitals (LCP/CLS/INP),
+  - WebP/AVIF, lazy-load, responsive images,
+  - минимизация JS/CSS и критический CSS для первого экрана.
+
+## 7) Поэтапный roadmap
+
+### Фаза 0. Discovery и контент-аудит
+- [ ] Зафиксировать бренд-направление, тон, целевые сегменты.
+- [ ] Подготовить контент-матрицу: что уже есть, чего не хватает.
+- [ ] Сформировать SEO-ядро по 4 языкам (приоритет: ru -> en -> uz -> zh).
+
+### Фаза 1. Дизайн-система и прототипы
+- [ ] Создать дизайн-систему: сетка, типографика, цвета, состояния компонентов.
+- [ ] Сделать wireframes/прототипы 4 страниц.
+- [ ] Утвердить контентные блоки с графиками/таблицами/инфографикой.
+
+### Фаза 2. Технический каркас
+- [ ] Подготовить мультистраничную структуру и общие компоненты (header/footer/nav).
+- [ ] Внедрить i18n-слой (локали, роутинг, переключение языка).
+- [ ] Добавить базовые SEO-шаблоны метаданных.
+
+### Фаза 3. Реализация страниц
+- [ ] Доработать `Главная` (карточки с глубоким содержанием).
+- [ ] Реализовать `Решения` (лента секций + sticky навигация).
+- [ ] Реализовать `Ресурсы` (hub + фильтры + шаблон материала).
+- [ ] Реализовать `Компания` (миссия, процесс, вакансии, контакты, форма, соцсети).
+
+### Фаза 4. Контент-пайплайн для блога
+- [ ] Подключить Google APIs и скрипт импорта.
+- [ ] Настроить конвертацию Docs -> сайтовый контент.
+- [ ] Автоматизировать публикацию и обновление sitemap.
+
+### Фаза 5. SEO и аналитика
+- [ ] Внедрить schema.org и hreflang.
+- [ ] Подключить веб-аналитику и события ключевых CTA.
+- [ ] Проверить индексацию и устранить технические ошибки.
+
+### Фаза 6. QA и запуск
+- [ ] Кроссбраузерная и мобильная проверка.
+- [ ] Проверка переводов, ссылок, форм, метаданных.
+- [ ] Финальный performance pass и релиз.
+
+## 8) Критерии готовности (Definition of Done)
+- Все 4 страницы реализованы согласно структуре и контент-модели.
+- 3 новые страницы (`Решения`, `Ресурсы`, `Компания`) выполнены без карточного паттерна.
+- Мультиязычность работает для `ru/uz/en/zh` с корректным `hreflang`.
+- Блог публикуется из Google Docs через автоматизированный процесс.
+- Базовые SEO-метрики и индексация проходят проверку без критичных ошибок.

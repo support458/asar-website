@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>asar.consulting | Тестирование</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/imask"></script>
+
+    <style>
+        :root {
+            --dark-purple: #410445;
+            --magenta: #A5158C;
+            --accent-yellow: #F6DC43;
+            --text-dark: #333;
+            --text-light: #fff;
+            --border-light: #eee;
+            --error-red: #d9534f;
+            --success-green: #28a745;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: linear-gradient(135deg, var(--dark-purple), var(--magenta));
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+        .top-bar {
+            position: fixed; top: 0; left: 0; width: 100%; display: flex;
+            justify-content: space-between; align-items: flex-start;
+            padding: 25px 40px; z-index: 1000; pointer-events: none;
+        }
+        .logo, .timer-container { pointer-events: auto; }
+        .logo { width: 150px; height: auto; }
+        .timer-container { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+        .timer-progress-group { display: flex; align-items: center; gap: 20px; }
+        #timer { font-size: 2em; font-weight: 700; color: var(--text-light); min-width: 120px; text-align: right; }
+        .progress-bar { width: 250px; height: 12px; background-color: rgba(0, 0, 0, 0.3); border-radius: 6px; overflow: hidden; }
+        #progress-bar-inner { height: 100%; width: 100%; background: var(--accent-yellow); border-radius: 6px; transition: width 1s linear; }
+        .question-nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 250px; display: none; }
+        .question-nav a {
+            display: flex; justify-content: center; align-items: center; color: var(--dark-purple);
+            background-color: rgba(255, 255, 255, 0.7); text-decoration: none; border-radius: 6px;
+            height: 35px; transition: background-color 0.3s, color 0.3s; font-weight: 700; font-size: 14px;
+        }
+        .question-nav a:hover { background-color: var(--accent-yellow); }
+        .question-nav a.active { background-color: var(--dark-purple); color: var(--text-light); }
+        .page-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 100vh; padding: 180px 40px 40px 40px; }
+        .quiz-card { background-color: var(--text-light); width: 100%; max-width: 800px; padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+        #instructions-screen h1 { font-size: 2em; text-align: center; color: var(--dark-purple); margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+        .styled-input {
+            width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 16px;
+            resize: none;
+        }
+        .instructions-list { list-style: none; margin-bottom: 40px; }
+        .instructions-list li { font-size: 1.1em; margin-bottom: 15px; padding-left: 35px; position: relative; }
+        .instructions-list li::before { content: '✓'; color: var(--magenta); font-weight: bold; font-size: 20px; position: absolute; left: 0; top: 0; }
+        .error-message { color: var(--error-red); font-weight: 500; text-align: center; margin-top: 15px; display: none; }
+        .action-button { width: 100%; padding: 18px; background: var(--accent-yellow); color: var(--dark-purple); border: none; border-radius: 12px; cursor: pointer; font-size: 18px; font-weight: 700; font-family: 'Montserrat', sans-serif; }
+        #quiz-screen { display: none; }
+        .question-block { margin-bottom: 35px; padding-top: 20px; }
+        .question-title { font-size: 1.2em; font-weight: 700; margin-bottom: 20px; }
+        .option-input { display: none; }
+        .option-label { display: block; background-color: #f8f9fa; border: 2px solid var(--border-light); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; cursor: pointer; font-weight: 500; }
+        .option-label:hover { border-color: var(--magenta); }
+        .option-input:checked + .option-label { background-color: #FFFBEB; border-color: var(--accent-yellow); box-shadow: 0 4px 10px rgba(246, 220, 67, 0.3); }
+        .status-message { display: none; text-align: center; }
+        .status-message .icon { font-size: 60px; line-height: 1; }
+        .status-message h1 { font-size: 2em; margin-top: 20px; margin-bottom: 15px; }
+        .status-message p { font-size: 1.1em; color: #6c757d; margin-bottom: 30px; }
+        #success-message .icon { color: var(--success-green); }
+        #error-message .icon { color: var(--error-red); }
+        #error-message h1 { color: var(--error-red); }
+
+        /* НОВОЕ ПРАВИЛО: Скрываем кнопку отправки по умолчанию */
+        #submit-quiz-btn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 20px; align-items: flex-start; }
+            .top-bar { flex-direction: column; align-items: center; gap: 20px; position: static; padding: 20px; }
+            .timer-container { width: 100%; align-items: center; }
+            .question-nav { width: 100%; grid-template-columns: repeat(5, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="top-bar">
+        <a href="index.html"><img src="https://asar.consulting/images/901/16163399/asar_cons_logo_white-YG2qrGh7w-1gOqoUpi192Q.png" alt="ASAR Consulting Logo" class="logo"></a>
+        <div class="timer-container">
+            <div class="timer-progress-group">
+                <div id="timer">00:00</div>
+                <div class="progress-bar">
+                    <div id="progress-bar-inner"></div>
+                </div>
+            </div>
+            <nav class="question-nav" id="question-nav"></nav>
+        </div>
+    </header>
+
+    <main class="page-wrapper">
+        <div class="quiz-card">
+            <form id="quizForm" action="send_to_chat.php" method="POST">
+                
+                <div id="instructions-screen">
+                    <h1>Подготовка к тесту</h1>
+                    <div class="user-info">
+                        <div class="form-group">
+                            <label for="fullName">Введите ваше ФИО:</label>
+                            <input type="text" id="fullName" name="fullName" class="styled-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Введите номер телефона:</label>
+                            <input type="tel" id="phone" name="phone" class="styled-input">
+                        </div>
+                    </div>
+                    <ul class="instructions-list">
+                         <li>На прохождение теста вам будет выделено определенное время.</li>
+                         <li>Таймер запустится после нажатия на кнопку "Начать тест".</li>
+                         <li>Приготовьте лист бумаги и ручку для записей, а также калькулятор.</li>
+                    </ul>
+                    <button id="start-quiz-btn" type="button" class="action-button">Начать тест</button>
+                    <p id="validation-error" class="error-message">Пожалуйста, заполните ФИО и введите полный 9-значный номер телефона.</p>
+                </div>
+                
+                <div id="quiz-screen">
+                    <input type="hidden" name="timeSpent" id="timeSpent">
+                    <div id="questions-container">
+                        </div>
+                    <button type="button" id="submit-quiz-btn" class="action-button">Завершить и отправить</button>
+                </div>
+
+                <div id="success-message" class="status-message">
+                    <div class="icon">✓</div>
+                    <h1>Спасибо!</h1>
+                    <p>Ваши ответы успешно отправлены.</p>
+                </div>
+                <div id="error-message" class="status-message">
+                    <div class="icon">!</div>
+                    <h1>Ошибка отправки</h1>
+                    <p>К сожалению, при отправке ответов произошла ошибка.</p>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const questionsUrl = 'get_questions.php';
+
+        const instructionsScreen = document.getElementById('instructions-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const startButton = document.getElementById('start-quiz-btn');
+        const quizForm = document.getElementById('quizForm');
+        const navContainer = document.getElementById('question-nav');
+        
+        let testStartTime;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const submitButton = document.getElementById('submit-quiz-btn');
+
+            if (status === 'success') {
+                instructionsScreen.style.display = 'none';
+                quizScreen.style.display = 'none';
+                successMessage.style.display = 'block';
+            } else if (status === 'error') {
+                instructionsScreen.style.display = 'none';
+                quizScreen.style.display = 'none';
+                errorMessage.style.display = 'block';
+            } else {
+                instructionsScreen.style.display = 'block';
+            }
+
+            const phoneInput = document.getElementById('phone');
+            const maskOptions = { mask: '+{998} 00 000 00 00', lazy: false };
+            const phoneMask = IMask(phoneInput, maskOptions);
+            
+            startButton.addEventListener('click', async () => {
+                const fullNameInput = document.getElementById('fullName');
+                const errorElement = document.getElementById('validation-error');
+                const maskedPhoneValue = phoneMask.value; 
+                const justDigits = maskedPhoneValue.replace(/\D/g, ''); 
+                
+                if (fullNameInput.value.trim() === '' || justDigits.length !== 12) {
+                    errorElement.style.display = 'block';
+                    return;
+                }
+                
+                errorElement.style.display = 'none';
+                instructionsScreen.style.display = 'none';
+                quizScreen.style.display = 'block';
+                navContainer.style.display = 'grid';
+                
+                testStartTime = Date.now();
+                setBeforeUnloadListener(true);
+
+                const timerDuration = await buildQuiz();
+                if (timerDuration) {
+                    startTimer(timerDuration);
+                    updateActiveNav();
+                }
+            });
+            
+            submitButton.addEventListener('click', () => {
+                calculateAndSetTimeSpent();
+                setBeforeUnloadListener(false);
+                quizForm.submit();
+            });
+            
+            quizForm.addEventListener('submit', () => {
+                setBeforeUnloadListener(false);
+            });
+        });
+        
+        function calculateAndSetTimeSpent() {
+            if (!testStartTime) return "не зафиксировано"; 
+            const endTime = Date.now();
+            const timeDiff = endTime - testStartTime;
+            const totalSeconds = Math.round(timeDiff / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const formattedTime = `${minutes} мин ${seconds} сек`;
+            document.getElementById('timeSpent').value = formattedTime;
+            return formattedTime;
+        }
+
+        const beforeUnloadHandler = (event) => {
+            event.preventDefault();
+            event.returnValue = '';
+            const formData = new FormData(quizForm);
+            const timeSpent = calculateAndSetTimeSpent();
+            formData.set('timeSpent', timeSpent);
+            formData.append('autosubmitted', 'true (refresh/close)');
+            navigator.sendBeacon('send_to_chat.php', formData);
+        };
+
+        function setBeforeUnloadListener(isActive) {
+            if (isActive) {
+                window.addEventListener('beforeunload', beforeUnloadHandler);
+            } else {
+                window.removeEventListener('beforeunload', beforeUnloadHandler);
+            }
+        }
+        
+        async function buildQuiz() {
+            const container = document.getElementById('questions-container');
+            const submitButton = document.getElementById('submit-quiz-btn');
+            
+            // ИЗМЕНЕНО: Показываем сообщение и очищаем навигацию
+            container.innerHTML = '<p style="text-align: center; font-size: 1.2em;">Желаем Вам удачи!</p>';
+            navContainer.innerHTML = ''; 
+
+            try {
+                const response = await fetch(questionsUrl);
+                if (!response.ok) { throw new Error(`Не удалось загрузить файл с вопросами (статус: ${response.status})`); }
+                const text = await response.text();
+                const lines = text.trim().split('\n').filter(line => line.trim() !== '');
+                if (lines.length < 2) { throw new Error('Файл с вопросами имеет неверный формат.'); }
+                const durationInMinutes = parseInt(lines[0], 10);
+                if (isNaN(durationInMinutes) || durationInMinutes <= 0) { throw new Error('Неверное значение для длительности таймера в файле.'); }
+                const questionLines = lines.slice(1);
+                container.innerHTML = ''; 
+                questionLines.forEach((line, index) => {
+                    const questionBlock = document.createElement('div');
+                    questionBlock.className = 'question-block';
+                    questionBlock.id = `question-anchor-${index}`; 
+                    const navLink = document.createElement('a');
+                    navLink.href = `#question-anchor-${index}`;
+                    navLink.textContent = index + 1;
+                    navLink.id = `nav-link-${index}`;
+                    navContainer.appendChild(navLink);
+                    const parts = line.split('|||');
+                    const questionText = parts[0];
+                    const questionType = parts[1];
+                    const options = parts.slice(2);
+                    const cleanQuestionType = questionType.trim().toLowerCase();
+                    const questionTitle = document.createElement('p');
+                    questionTitle.className = 'question-title';
+                    questionTitle.textContent = `${index + 1}. ${questionText}`;
+                    questionBlock.appendChild(questionTitle);
+                    const fieldName = `q-${index}`;
+                    if (cleanQuestionType === 'radio' || cleanQuestionType === 'checkbox') {
+                        options.forEach((option, optionIndex) => {
+                            const optionId = `${fieldName}-${optionIndex}`;
+                            const input = document.createElement('input');
+                            input.type = cleanQuestionType; input.id = optionId; input.className = 'option-input';
+                            input.name = fieldName + (cleanQuestionType === 'checkbox' ? '[]' : '');
+                            input.value = option.trim();
+                            const optionLabel = document.createElement('label');
+                            optionLabel.className = 'option-label'; optionLabel.htmlFor = optionId; optionLabel.textContent = option.trim();
+                            questionBlock.appendChild(input); questionBlock.appendChild(optionLabel);
+                        });
+                    } else if (cleanQuestionType === 'text') {
+                        const input = document.createElement('textarea');
+                        input.name = fieldName; input.className = 'styled-input'; input.rows = 4;
+                        input.placeholder = "Введите ваш ответ...";
+                        questionBlock.appendChild(input);
+                    }
+                    container.appendChild(questionBlock);
+                });
+                
+                // ИЗМЕНЕНО: Показываем кнопку "Завершить" после успешной загрузки
+                submitButton.style.display = 'block';
+
+                return durationInMinutes;
+            } catch (error) {
+                container.innerHTML = `<p style="color: red; text-align: center;"><b>Ошибка:</b> ${error.message}</p>`;
+                // Кнопка "Завершить" останется скрытой в случае ошибки
+                return null;
+            }
+        }
+        
+        let initialDurationSeconds = 0;
+        function startTimer(durationInMinutes) {
+            initialDurationSeconds = durationInMinutes * 60;
+            let durationInSeconds = initialDurationSeconds;
+            const display = document.getElementById('timer');
+            const progressBarInner = document.getElementById('progress-bar-inner');
+            const interval = setInterval(function () {
+                if (durationInSeconds < 0) {
+                    clearInterval(interval);
+                    display.textContent = "Время вышло!";
+                    
+                    // Имитируем клик по кнопке отправки, чтобы сработала вся нужная логика
+                    document.getElementById('submit-quiz-btn').click(); 
+                    return;
+                }
+                const minutes = Math.floor(durationInSeconds / 60);
+                const seconds = durationInSeconds % 60;
+                display.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                const percentage = (durationInSeconds / initialDurationSeconds) * 100;
+                progressBarInner.style.width = `${percentage}%`;
+                durationInSeconds--;
+            }, 1000);
+        }
+
+        function updateActiveNav() {
+            const scrollPosition = window.scrollY + 180;
+            let anyActive = false;
+            document.querySelectorAll('.question-block').forEach((block, index) => {
+                const navLink = document.getElementById(`nav-link-${index}`);
+                if(navLink) {
+                    if (!anyActive && block.offsetTop <= scrollPosition && block.offsetTop + block.offsetHeight > scrollPosition) {
+                        navLink.classList.add('active');
+                        anyActive = true;
+                    } else {
+                        navLink.classList.remove('active');
+                    }
+                }
+            });
+        }
+        window.addEventListener('scroll', updateActiveNav);
+
+    </script>
+</body>
+</html>
