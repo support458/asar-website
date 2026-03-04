@@ -1,6 +1,6 @@
 ﻿(() => {
   const SUPPORTED_LANGS = new Set(["ru", "uz", "en", "zh"]);
-  const LANG_LABELS = { ru: "RU", uz: "UZ", en: "EN", zh: "中文" };
+  const LANG_LABELS = { ru: "RU", uz: "UZ", en: "EN", zh: "ZH" };
 
   const I18N = {
     en: {
@@ -240,7 +240,7 @@
   }
 
   function highlightCurrentNav() {
-    document.querySelectorAll(".main-nav a").forEach((link) => link.classList.remove("active"));
+    document.querySelectorAll(".main-nav a[data-nav]").forEach((link) => link.classList.remove("active"));
     const current = document.querySelector(`.main-nav a[data-nav="${page}"]`);
     if (current) current.classList.add("active");
   }
@@ -248,6 +248,8 @@
   function initMenus() {
     const menuToggle = document.getElementById("menuToggle");
     const mainNav = document.getElementById("mainNav");
+    const header = document.getElementById("siteHeader");
+    const languageSwitcher = document.querySelector(".language-switcher");
     if (menuToggle && mainNav) {
       menuToggle.addEventListener("click", () => {
         const expanded = menuToggle.getAttribute("aria-expanded") === "true";
@@ -259,11 +261,16 @@
     const languageToggle = document.getElementById("languageToggle");
     const languageMenu = document.getElementById("languageMenu");
     if (languageToggle && languageMenu) {
+      const setLangOpen = (open) => {
+        if (header) header.classList.toggle("lang-open", open);
+      };
+
       languageToggle.addEventListener("click", (event) => {
         event.stopPropagation();
         const expanded = languageToggle.getAttribute("aria-expanded") === "true";
         languageToggle.setAttribute("aria-expanded", String(!expanded));
         languageMenu.classList.toggle("open", !expanded);
+        setLangOpen(!expanded);
       });
 
       document.addEventListener("click", (event) => {
@@ -272,6 +279,7 @@
         if (!languageMenu.contains(target) && !languageToggle.contains(target)) {
           languageMenu.classList.remove("open");
           languageToggle.setAttribute("aria-expanded", "false");
+          setLangOpen(false);
         }
       });
 
@@ -279,8 +287,24 @@
         if (event.key === "Escape") {
           languageMenu.classList.remove("open");
           languageToggle.setAttribute("aria-expanded", "false");
+          setLangOpen(false);
         }
       });
+
+      if (languageSwitcher) {
+        languageSwitcher.addEventListener("mouseenter", () => setLangOpen(true));
+        languageSwitcher.addEventListener("mouseleave", () => {
+          if (!languageMenu.classList.contains("open")) setLangOpen(false);
+        });
+        languageSwitcher.addEventListener("focusin", () => setLangOpen(true));
+        languageSwitcher.addEventListener("focusout", () => {
+          window.setTimeout(() => {
+            if (!languageSwitcher.contains(document.activeElement) && !languageMenu.classList.contains("open")) {
+              setLangOpen(false);
+            }
+          }, 0);
+        });
+      }
     }
   }
 
@@ -347,34 +371,114 @@
     const cards = Array.from(document.querySelectorAll(".stack-card"));
     if (!cards.length) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const revealTrigger = document.getElementById("homeFooterRevealTrigger");
-    const isHomePage = document.body.dataset.page === "home";
 
     let rafId = 0;
 
     const update = () => {
       rafId = 0;
       const viewport = window.innerHeight || 1;
-      let revealLift = 0;
-
-      if (isHomePage && revealTrigger) {
-        const triggerRect = revealTrigger.getBoundingClientRect();
-        const start = viewport * 0.98;
-        const end = viewport * 0.32;
-        const raw = (start - triggerRect.top) / (start - end);
-        const progress = Math.max(0, Math.min(1, raw));
-        revealLift = progress * viewport * 0.36;
-      }
 
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
         const offset = (rect.top - viewport * 0.26) / viewport;
         const clamped = Math.max(-1.3, Math.min(1.3, offset));
-        const translateY = clamped * -16 - revealLift;
+        const translateY = clamped * -16;
         const rotateX = clamped * 1.8;
         const scale = 1 - Math.min(Math.abs(clamped) * 0.028, 0.028);
         card.style.transform = `translateY(${translateY}px) rotateX(${rotateX}deg) scale(${scale})`;
       });
+    };
+
+    const requestTick = () => {
+      if (!rafId) rafId = window.requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", requestTick, { passive: true });
+    window.addEventListener("resize", requestTick, { passive: true });
+    requestTick();
+  }
+
+  function initHomeHeaderMorph() {
+    if (page !== "home") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const header = document.getElementById("siteHeader");
+    const hero = document.getElementById("homeHeaderHero");
+    if (!header || !hero) return;
+
+    const compactHeight = () => {
+      const rootValue = getComputedStyle(document.documentElement).getPropertyValue("--header-h").trim();
+      const numeric = Number.parseFloat(rootValue);
+      return Number.isFinite(numeric) ? numeric : 80;
+    };
+
+    let rafId = 0;
+
+    const update = () => {
+      rafId = 0;
+      const viewport = Math.max(1, window.innerHeight || 1);
+      const scrollY = window.scrollY || 0;
+      const progress = Math.max(0, Math.min(1, scrollY / (viewport * 0.9)));
+      const compact = compactHeight();
+      const currentHeight = viewport - (viewport - compact) * progress;
+      const heroOpacity = Math.max(0, 1 - progress * 1.25);
+      const heroShift = -46 * progress;
+
+      header.style.setProperty("--home-header-h", `${currentHeight}px`);
+      header.style.setProperty("--home-hero-opacity", heroOpacity.toFixed(3));
+      header.style.setProperty("--home-hero-shift", `${heroShift.toFixed(2)}px`);
+      header.classList.toggle("is-compact", progress > 0.92);
+      hero.style.pointerEvents = progress > 0.92 ? "none" : "auto";
+    };
+
+    const requestTick = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener("scroll", requestTick, { passive: true });
+    window.addEventListener("resize", requestTick, { passive: true });
+    requestTick();
+  }
+
+  function initSubpageHeaderMorph() {
+    if (page === "home") return;
+
+    const header = document.getElementById("siteHeader");
+    const main = document.getElementById("main-content");
+    const hero = main ? main.querySelector(".page-hero") : null;
+    if (!header || !main || !hero) return;
+
+    document.body.classList.add("subpage-hero-morph");
+    hero.classList.add("subpage-header-hero");
+    header.appendChild(hero);
+
+    const compactHeight = () => {
+      const rootValue = getComputedStyle(document.documentElement).getPropertyValue("--header-h").trim();
+      const numeric = Number.parseFloat(rootValue);
+      return Number.isFinite(numeric) ? numeric : 48;
+    };
+
+    let rafId = 0;
+
+    const update = () => {
+      rafId = 0;
+      const viewport = Math.max(1, window.innerHeight || 1);
+      const scrollY = window.scrollY || 0;
+      const heroRatio = window.innerWidth <= 860 ? 0.46 : 0.5;
+      const maxHeroHeight = viewport * heroRatio;
+      const progress = Math.max(0, Math.min(1, scrollY / (viewport * 0.55)));
+      const compact = compactHeight();
+      const currentHeight = compact + maxHeroHeight * (1 - progress);
+      const heroOpacity = Math.max(0, 1 - progress * 1.2);
+      const heroShift = -52 * progress;
+
+      header.style.setProperty("--subpage-header-h", `${currentHeight}px`);
+      header.style.setProperty("--subpage-hero-opacity", heroOpacity.toFixed(3));
+      header.style.setProperty("--subpage-hero-shift", `${heroShift.toFixed(2)}px`);
+      header.classList.toggle("is-compact", progress > 0.9);
+      hero.style.pointerEvents = progress > 0.9 ? "none" : "auto";
     };
 
     const requestTick = () => {
@@ -397,5 +501,7 @@
   initMenus();
   initLanguageSwitcher(lang);
   initResourceFilters();
+  initHomeHeaderMorph();
+  initSubpageHeaderMorph();
   initHomeCardMotion();
 })();
