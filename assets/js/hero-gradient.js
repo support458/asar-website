@@ -69,10 +69,13 @@ const config = {
 
 const LOOP_DURATION = 15000;
 const meteors = [];
+const MAX_METEORS = 12;
 
 let noiseCanvas = document.createElement('canvas');
 let blobCanvas = document.createElement('canvas');
 let blobCtx = blobCanvas.getContext('2d');
+let meteorSpawnTimer = null;
+let isPageVisible = !document.hidden;
 
 function updateCanvasSize() {
     canvas.width = window.innerWidth;
@@ -102,11 +105,28 @@ function updateNoise() {
     blobCanvas.height = canvas.height / 4;
 }
 
+function scheduleNextMeteor() {
+    if (meteorSpawnTimer) {
+        clearTimeout(meteorSpawnTimer);
+    }
+    meteorSpawnTimer = setTimeout(spawnLoop, Math.random() * 2000 + 4000);
+}
+
 function spawnLoop() {
+    if (!isPageVisible) {
+        scheduleNextMeteor();
+        return;
+    }
+
+    if (meteors.length >= MAX_METEORS) {
+        scheduleNextMeteor();
+        return;
+    }
+
     const startX = Math.random() * (canvas.width * 0.5) + canvas.width;
     const startY = Math.random() * (canvas.height * 0.5) - (canvas.height * 0.2);
     meteors.push({ x: startX, y: startY, angle: 135, tailLen: Math.random() * 60 + 120 });
-    setTimeout(spawnLoop, Math.random() * 2000 + 4000);
+    scheduleNextMeteor();
 }
 
 function render(dt) {
@@ -193,7 +213,8 @@ function render(dt) {
         ctx.globalAlpha = 1.0;
     }
 
-    meteors.forEach((m, idx) => {
+    for (let idx = meteors.length - 1; idx >= 0; idx--) {
+        const m = meteors[idx];
         const rad = m.angle * Math.PI / 180;
         m.x += Math.cos(rad) * 30; m.y += Math.sin(rad) * 30;
         ctx.save(); ctx.translate(m.x, m.y); ctx.rotate(rad);
@@ -203,7 +224,7 @@ function render(dt) {
         ctx.beginPath(); ctx.arc(0, 0, 1.5, 0, Math.PI * 2); ctx.fillStyle = 'white'; ctx.fill();
         ctx.restore();
         if (m.x < -300 || m.y > h + 300) meteors.splice(idx, 1);
-    });
+    }
 
     ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.25;
     ctx.drawImage(noiseCanvas, 0, 0); ctx.globalAlpha = 1.0; ctx.globalCompositeOperation = 'source-over';
@@ -213,6 +234,13 @@ function animate() {
     render(Date.now());
     requestAnimationFrame(animate);
 }
+
+document.addEventListener('visibilitychange', () => {
+    isPageVisible = !document.hidden;
+    if (!isPageVisible) {
+        meteors.length = 0;
+    }
+});
 
 window.addEventListener('resize', updateCanvasSize);
 updateCanvasSize();

@@ -18,40 +18,40 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/sheets.css">
 </head>
 
-<body class="page-home">
+<body class="page-home sheets-enabled">
 
     <header class="site-header global-nav">
-        <div class="container nav-shell">
-            <a href="/ru/" class="brand">asar<span>.consulting</span></a>
+        <div class="nav-shell">
+            <div class="nav-left">
+                <a href="/ru/" class="brand">asar<span>.consulting</span></a>
 
-            <nav class="main-nav nav-links">
-                <a href="/ru/" class="nav-link active">Главная</a>
-                <a href="/ru/solutions.html" class="nav-link">Решения</a>
-                <a href="/ru/resources.html" class="nav-link">Ресурсы</a>
-                <a href="/ru/company.html" class="nav-link">Компания</a>
-            </nav>
+                <nav class="main-nav nav-links desktop-only" aria-label="Основная навигация">
+                    <a href="#top" class="nav-link active">Главная</a>
+                    <a href="#services" class="nav-link">Решения</a>
+                    <a href="#" class="nav-link">Ресурсы</a>
+                    <a href="#contact" class="nav-link">Компания</a>
+                </nav>
+            </div>
 
-            <a href="/ru/company.html#contact" class="btn btn-ghost nav-cta">Обсудить задачу</a>
+            <div class="nav-right desktop-only">
+                <a href="/ru/login.html" class="btn-login">Войти</a>
 
-            <button class="nav-toggle" aria-label="Открыть меню">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <div class="lang-switcher">
-                <span class="lang-switcher-current">RU</span>
-                <div class="lang-dropdown">
-                    <a href="#" data-lang="ru">Русский (RU)</a>
-                    <a href="#" data-lang="en">English (EN)</a>
-                    <a href="#" data-lang="uz">O'zbekcha (UZ)</a>
-                    <a href="#" data-lang="zh">中文 (ZH)</a>
+                <div class="lang-switcher">
+                    <span class="lang-switcher-current">RU</span>
+                    <div class="lang-dropdown">
+                        <a href="#" data-lang="ru">Русский (RU)</a>
+                        <a href="#" data-lang="en">English (EN)</a>
+                        <a href="#" data-lang="uz">O'zbekcha (UZ)</a>
+                        <a href="#" data-lang="zh">中文 (ZH)</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,50 +60,24 @@
     <main>
         <section class="hero reveal" id="top">
             <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
-            <div class="hero-overlay"></div>
-
-            <div class="container hero-grid">
+            <div class="container hero-container">
                 <div class="hero-copy">
-                    <p class="t-kicker"><span class="status-dot"></span>Финансы и операции в одном контуре</p>
-                    <h1 class="display">Прозрачные финансы и управляемые процессы</h1>
-                    <p class="hero-lead">Выстраиваем управленческий учет, бюджетирование и казначейство. Формируем
-                        регламенты и контроль исполнения, чтобы решения принимались на проверяемых данных, а процессы
-                        работали предсказуемо.</p>
-
-                    <div class="hero-cta-row">
-                        <a href="/ru/company.html#contact" class="btn btn-primary">Обсудить задачу</a>
-                        <a href="/ru/solutions.html" class="btn btn-secondary">Посмотреть решения</a>
-                    </div>
-
-                    <div class="hero-meta-grid">
-                        <article class="hero-metric">
-                            <p class="hero-metric-value">4</p>
-                            <p class="hero-metric-label">Зоны контроля: деньги, цифры, исполнение и документы.</p>
-                        </article>
-                        <article class="hero-metric">
-                            <p class="hero-metric-value">1</p>
-                            <p class="hero-metric-label">Единый контур принятия решений для собственника и команды.</p>
-                        </article>
-                        <article class="hero-metric">
-                            <p class="hero-metric-value">0</p>
-                            <p class="hero-metric-label">Случайных решений без подтвержденных данных.</p>
-                        </article>
+                    <p class="t-kicker hero-kicker">МЫ ОБЕСПЕЧИВАЕМ</p>
+                    <h1 class="display hero-title">
+                        <span class="hero-title-line">Прозрачные финансы</span>
+                        <span class="hero-title-line">и управляемые процессы</span>
+                    </h1>
+                    <p class="hero-lead">Внедряем и ведем управленческий учет, бюджетирование и казначейство.
+                        Формируем регламенты и контроль исполнения, чтобы решения принимались на проверяемых данных, а
+                        процессы работали предсказуемо.</p>
+                    <div class="hero-notes">
+                        <p class="hero-note">Мы работаем для предпринимателей и руководителей, чей бизнес вышел за
+                            пределы ручного управления.</p>
+                        <p class="hero-note">Нам важна прозрачность, точность, скорость, обеспечение необходимой
+                            информацией для принятия решений.</p>
                     </div>
                 </div>
-
-                <aside class="hero-panel">
-                    <h2 class="panel-title">Как выглядит рабочий контур</h2>
-                    <ol class="hero-steps">
-                        <li><strong>Диагностика:</strong> фиксируем целевые показатели и текущие ограничения.</li>
-                        <li><strong>Архитектура:</strong> собираем отчетность, роли и ритм контроля в единую модель.</li>
-                        <li><strong>Внедрение:</strong> настраиваем правила, маршруты согласований и лимиты.</li>
-                        <li><strong>Поддержка:</strong> удерживаем дисциплину исполнения и обновляем систему под рост.</li>
-                    </ol>
-                    <a href="#actions" class="link-arrow">Смотреть этапы внедрения</a>
-                </aside>
             </div>
-
-            <a href="#services" class="hero-scroll">Листайте вниз</a>
         </section>
 
         <section class="section section-context reveal" id="context">
@@ -117,7 +91,8 @@
                     <article class="context-card">
                         <h3>Для кого мы работаем</h3>
                         <p>Для предпринимателей и руководителей, чей бизнес уже нельзя держать в голове. Когда
-                            необходима система, в которой понятно, что происходит с деньгами, задачами и исполнением.</p>
+                            необходима система, в которой понятно, что происходит с деньгами, задачами и исполнением.
+                        </p>
                     </article>
                     <article class="context-card">
                         <h3>Что для нас важно</h3>
@@ -270,7 +245,8 @@
                     </article>
                     <article class="effect-tile">
                         <p class="effect-metric">03</p>
-                        <p>Команда работает по согласованным регламентам, а сроки и задачи становятся контролируемыми.</p>
+                        <p>Команда работает по согласованным регламентам, а сроки и задачи становятся контролируемыми.
+                        </p>
                     </article>
                     <article class="effect-tile">
                         <p class="effect-metric">04</p>
@@ -317,9 +293,54 @@
         </div>
     </footer>
 
+    <!-- Mobile Menu Trigger -->
+    <button class="mobile-nav-toggle" aria-label="Открыть мобильное меню">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+    </button>
+
+    <!-- Fullscreen Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" aria-hidden="true">
+        <div class="mobile-menu-inner">
+            <nav class="mobile-links">
+                <a href="#top" class="mobile-link active">Главная</a>
+                <a href="#services" class="mobile-link">Решения</a>
+                <a href="#actions" class="mobile-link">Процесс</a>
+                <a href="#contact" class="mobile-link">Контакты</a>
+            </nav>
+
+            <div class="mobile-lang-row">
+                <a href="#" data-lang="ru" class="active">RU</a>
+                <a href="#" data-lang="en">EN</a>
+                <a href="#" data-lang="uz">UZ</a>
+                <a href="#" data-lang="zh">ZH</a>
+            </div>
+
+            <div class="mobile-socials">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="LinkedIn">IN</a>
+            </div>
+
+            <div class="mobile-actions">
+                <a href="tel:+12345678" class="btn btn-primary btn-call">Позвонить</a>
+                <a href="https://t.me/asar_consulting_blog" class="mobile-tg-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span>Написать</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
     <script src="../assets/js/hero-gradient.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/sheets.js"></script>
 </body>
 
 </html>

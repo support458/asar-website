@@ -65,21 +65,66 @@
     align-items: end;
 }
 
+.hero .hero-container {
+    width: min(100% - calc(var(--space-xl) + var(--space-xs)), var(--container-max-wide));
+    position: relative;
+    z-index: var(--z-elevated);
+}
+
 .hero-copy {
-    max-width: 700px;
+    max-width: calc(var(--container-max-width) * 0.58);
+    transform: translateX(calc(var(--space-2xl) * -1));
 }
 
 .hero .display {
     color: var(--color-text-inverse);
-    max-width: 14ch;
+    max-width: none;
     text-wrap: balance;
 }
 
+.hero-kicker {
+    margin-bottom: var(--space-md);
+    font-size: var(--body-size);
+    letter-spacing: 0.08em;
+    color: var(--color-text-inverse);
+    opacity: 0.5;
+}
+
+.hero-title {
+    margin-bottom: var(--space-xl);
+    font-size: var(--h1-size);
+    line-height: 1.2;
+}
+
+.hero-title-line {
+    display: block;
+    white-space: nowrap;
+}
+
 .hero-lead {
-    color: rgba(255, 255, 255, 0.86);
-    font-size: var(--body-size-lg);
-    max-width: 60ch;
-    margin-bottom: clamp(1.4rem, 2.3vw, 2rem);
+    color: var(--color-text-inverse);
+    opacity: 0.7;
+    font-size: var(--body-size);
+    line-height: var(--line-height-base);
+    max-width: none;
+    margin-bottom: 0;
+}
+
+.hero-notes {
+    width: min(100%, calc(var(--container-max-width) * 0.43));
+    margin-top: calc(var(--space-4xl) + var(--space-lg));
+    transform: translateX(calc(var(--space-3xl) * -1));
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg);
+}
+
+.hero-note {
+    margin: 0;
+    color: var(--color-text-inverse);
+    opacity: 0.7;
+    font-size: var(--small-size);
+    line-height: var(--line-height-base);
 }
 
 .hero-cta-row {
@@ -604,6 +649,7 @@
 
     .hero-copy {
         max-width: none;
+        transform: none;
     }
 
     .hero-panel {
@@ -616,6 +662,17 @@
         padding-top: clamp(6.2rem, 15vw, 8rem);
     }
 
+    .hero-title-line {
+        white-space: normal;
+    }
+
+    .hero-notes {
+        width: 100%;
+        margin-top: var(--space-xl);
+        transform: none;
+    }
+
+    .hero-notes,
     .hero-meta-grid,
     .context-grid,
     .services-grid,

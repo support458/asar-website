@@ -1,0 +1,11 @@
+# AI Assistant Root Rules (Cursor / Copilot / Gemini / Antigravity)
+
+**CRITICAL INSTRUCTION FOR AI AGENT:**
+Whenever the user asks you to modify the design, CSS, HTML layouts, UI components, or styles in any way, you MUST strictly adhere to the following workflow:
+
+1. **READ FIRST**: You MUST invoke `view_file` on `docs/design/designrules.md`. This is your primary source of truth for all design decisions.
+2. **USE EXISTING TOKENS ONLY**: You MUST derive all CSS colors, sizes, paddings, margins, shadows, and radii exclusively from `assets/css/variables.css`. Do NOT output hardcoded HEX values (`#FFFFFF`), raw pixels (`15px`), or `rem`/`em` dimensions unless they are mapped to a CSS variable `var(--...)`.
+3. **DO NOT IMPROVISE**: If the user asks for a design element that does NOT have a clear matching variable in `assets/css/variables.css` (e.g., they ask for a new specific shade of blue or a 50px gap, but no such token exists), you MUST STOP. **DO NOT write code**. You MUST ask the user for clarification (e.g., "There is no variable for a 50px gap in variables.css. Should I add a new one, or use the existing `--space-xl`?"). Do not proceed until you receive a direct answer.
+4. **NO INLINE STYLES**: Do not use `style="..."` attributes in HTML. All styles go into CSS classes.
+
+Breaking these rules is unacceptable. Conform entirely to the established design system.

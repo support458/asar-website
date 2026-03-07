@@ -4,8 +4,8 @@
     --color-primary-deep: #090032;
     --color-primary-soft: rgba(15, 0, 84, 0.08);
     --color-primary-glow: rgba(15, 0, 84, 0.26);
-    --color-bg-base: #FCF6EF;
-    --color-bg-alt: #F3ECE5;
+    --color-bg-base: #FBFCFC;
+    --color-bg-alt: #f5f4f2;
     --color-bg-elevated: #FFFFFF;
     --color-text-main: #1A1A1A;
     --color-text-muted: #6B7280;
@@ -45,7 +45,9 @@
     --radius-btn: 12px;
     --radius-card: 24px;
     --radius-panel: 28px;
+    --radius-lg: 32px;
     --radius-pill: 9999px;
+    --radius-circle: 50%;
 
     /* Shadows */
     --shadow-soft: 0 12px 28px rgba(15, 0, 84, 0.06);
@@ -55,4 +57,12 @@
     /* Motion */
     --transition-base: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     --transition-fast: all 0.2s ease;
+    --transition-snappy: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+
+    /* Z-Index Hierarchy */
+    --z-base: 1;
+    --z-elevated: 10;
+    --z-dropdown: 100;
+    --z-header: 1000;
+    --z-modal: 9999;
 }

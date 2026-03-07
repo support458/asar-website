@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASAR Design System</title>
+    <!-- Use existing CSS files to ensure accurate representation -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Specific styles for the design system preview page only */
+        body {
+            background-color: var(--color-bg-alt);
+            padding: 40px;
+            color: var(--color-text-main);
+        }
+
+        .ds-header {
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 20px;
+        }
+
+        .ds-section {
+            background: var(--color-bg-elevated);
+            border-radius: var(--radius-card);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .ds-section-title {
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 10px;
+        }
+
+        /* Colors Grid */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .color-card {
+            border-radius: var(--radius-btn);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--color-border);
+        }
+
+        .color-swatch {
+            height: 100px;
+            width: 100%;
+        }
+
+        .color-info {
+            padding: 15px;
+            background: var(--color-bg-elevated);
+        }
+
+        .color-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .color-var {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            font-family: monospace;
+        }
+
+        /* Typography Grid */
+        .type-row {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed var(--color-border);
+        }
+
+        .type-var {
+            display: inline-block;
+            background: var(--color-bg-alt);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        /* Spacing / Geometry Grid */
+        .space-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .space-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .space-box {
+            background: var(--color-primary-soft);
+            border: 1px dashed var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        /* Geometry */
+        .geom-item {
+            background: var(--color-primary);
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        /* Shadows */
+        .shadow-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .shadow-box {
+            background: var(--color-bg-elevated);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-btn);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ds-header">
+        <h1>🎨 ASAR Design System</h1>
+        <p>Live visual guideline corresponding to <code>variables.css</code></p>
+    </div>
+
+    <!-- COLORS -->
+    <div class="ds-section">
+        <h2 class="ds-section-title">Colors</h2>
+        <div class="color-grid">
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-primary)"></div>
+                <div class="color-info">
+                    <span class="color-name">Primary</span>
+                    <span class="color-var">var(--color-primary)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-primary-deep)"></div>
+                <div class="color-info">
+                    <span class="color-name">Primary Deep</span>
+                    <span class="color-var">var(--color-primary-deep)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-primary-soft)"></div>
+                <div class="color-info">
+                    <span class="color-name">Primary Soft</span>
+                    <span class="color-var">var(--color-primary-soft)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-bg-base)"></div>
+                <div class="color-info">
+                    <span class="color-name">Bg Base</span>
+                    <span class="color-var">var(--color-bg-base)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-bg-alt)"></div>
+                <div class="color-info">
+                    <span class="color-name">Bg Alt</span>
+                    <span class="color-var">var(--color-bg-alt)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-text-main)"></div>
+                <div class="color-info">
+                    <span class="color-name">Text Main</span>
+                    <span class="color-var">var(--color-text-main)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-text-muted)"></div>
+                <div class="color-info">
+                    <span class="color-name">Text Muted</span>
+                    <span class="color-var">var(--color-text-muted)</span>
+                </div>
+            </div>
+            <div class="color-card">
+                <div class="color-swatch" style="background-color: var(--color-border)"></div>
+                <div class="color-info">
+                    <span class="color-name">Border</span>
+                    <span class="color-var">var(--color-border)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="ds-section">
+        <h2 class="ds-section-title">Typography</h2>
+
+        <div class="type-row">
+            <span class="type-var">var(--font-display) | var(--display-size)</span>
+            <div
+                style="font-family: var(--font-display); font-size: var(--display-size); font-weight: 800; line-height: 1.1;">
+                Display Hero Title</div>
+        </div>
+
+        <div class="type-row">
+            <span class="type-var">var(--font-display) | var(--h1-size)</span>
+            <div
+                style="font-family: var(--font-display); font-size: var(--h1-size); font-weight: 800; line-height: 1.2;">
+                Heading Level 1</div>
+        </div>
+
+        <div class="type-row">
+            <span class="type-var">var(--font-display) | var(--h2-size)</span>
+            <div
+                style="font-family: var(--font-display); font-size: var(--h2-size); font-weight: 700; line-height: 1.3;">
+                Heading Level 2</div>
+        </div>
+
+        <div class="type-row">
+            <span class="type-var">var(--font-display) | var(--h3-size)</span>
+            <div
+                style="font-family: var(--font-display); font-size: var(--h3-size); font-weight: 700; line-height: 1.4;">
+                Heading Level 3</div>
+        </div>
+
+        <div class="type-row">
+            <span class="type-var">var(--font-body) | var(--body-size-lg)</span>
+            <div
+                style="font-family: var(--font-body); font-size: var(--body-size-lg); font-weight: 400; line-height: var(--line-height-base);">
+                Large body text. Typically used for intro paragraphs or important summaries.
+                Our system uses a combination of modern typography and premium layouts.
+            </div>
+        </div>
+
+        <div class="type-row" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+            <span class="type-var">var(--font-body) | var(--body-size)</span>
+            <div
+                style="font-family: var(--font-body); font-size: var(--body-size); font-weight: 400; line-height: var(--line-height-base);">
+                Standard body text. This is the main reading font for paragraphs, articles, and long-form content.
+                It ensures maximum readability across all devices.
+            </div>
+            <br>
+            <span class="type-var">var(--font-body) | var(--small-size)</span>
+            <div
+                style="font-family: var(--font-body); font-size: var(--small-size); font-weight: 500; color: var(--color-text-muted);">
+                Small text used for metadata, captions, or legal notes.
+            </div>
+        </div>
+    </div>
+
+    <!-- GEOMETRY (RADIUS) -->
+    <div class="ds-section">
+        <h2 class="ds-section-title">Geometry (Border Radius)</h2>
+        <div class="space-grid">
+            <div class="space-item">
+                <div class="geom-item" style="border-radius: var(--radius-btn);"></div>
+                <span class="color-var">--radius-btn</span>
+            </div>
+            <div class="space-item">
+                <div class="geom-item" style="border-radius: var(--radius-card);"></div>
+                <span class="color-var">--radius-card</span>
+            </div>
+            <div class="space-item">
+                <div class="geom-item" style="border-radius: var(--radius-panel);"></div>
+                <span class="color-var">--radius-panel</span>
+            </div>
+            <div class="space-item">
+                <div class="geom-item" style="border-radius: var(--radius-pill); width: 140px; height: 50px;"></div>
+                <span class="color-var">--radius-pill</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHADOWS -->
+    <div class="ds-section">
+        <h2 class="ds-section-title">Shadows</h2>
+        <div class="shadow-grid">
+            <div class="shadow-box" style="box-shadow: var(--shadow-soft);">--shadow-soft</div>
+            <div class="shadow-box" style="box-shadow: var(--shadow-medium);">--shadow-medium</div>
+            <div class="shadow-box" style="box-shadow: var(--shadow-elevated);">--shadow-elevated</div>
+        </div>
+    </div>
+
+    <!-- SPACING -->
+    <div class="ds-section">
+        <h2 class="ds-section-title">Spacing</h2>
+        <div class="space-grid">
+            <div class="space-item">
+                <div class="space-box" style="width: var(--space-xs); height: var(--space-xs);"></div>
+                <span class="color-var">--space-xs</span>
+            </div>
+            <div class="space-item">
+                <div class="space-box" style="width: var(--space-sm); height: var(--space-sm);"></div>
+                <span class="color-var">--space-sm</span>
+            </div>
+            <div class="space-item">
+                <div class="space-box" style="width: var(--space-md); height: var(--space-md);"></div>
+                <span class="color-var">--space-md</span>
+            </div>
+            <div class="space-item">
+                <div class="space-box" style="width: var(--space-lg); height: var(--space-lg);"></div>
+                <span class="color-var">--space-lg</span>
+            </div>
+            <div class="space-item">
+                <div class="space-box" style="width: var(--space-xl); height: var(--space-xl);"></div>
+                <span class="color-var">--space-xl</span>
+            </div>
+            <div class="space-item">
+                <div class="space-box" style="width: var(--space-2xl); height: var(--space-2xl);"></div>
+                <span class="color-var">--space-2xl</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

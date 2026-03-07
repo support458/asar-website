@@ -4,10 +4,12 @@
      Handles animations, smooth scrolling, mobile nav, and language routing.
      ========================================================================= */
 
+  let globalLenis = null;
+
   // 1. Initialize Lenis for Smooth Scrolling
   function initLenis() {
     if (typeof Lenis !== "undefined") {
-      const lenis = new Lenis({
+      globalLenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         wheelMultiplier: 1,
@@ -15,7 +17,7 @@
       });
 
       function raf(time) {
-        lenis.raf(time);
+        globalLenis.raf(time);
         requestAnimationFrame(raf);
       }
       requestAnimationFrame(raf);
@@ -94,28 +96,31 @@
 
   // 6. Mobile Menu Toggle
   function initMobileNav() {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    const navToggle = document.querySelector('.mobile-nav-toggle');
 
-    if (navToggle && navLinks) {
-      navToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        navToggle.classList.toggle('open');
+    if (navToggle) {
+      navToggle.addEventListener('click', (e) => {
+        // Stop propagation in case there is another click handler on the body blocking it
+        e.stopPropagation();
 
-        // Prevent scrolling when menu is open
-        if (navLinks.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
+        document.body.classList.toggle('menu-open');
+        navToggle.classList.toggle('menu-open'); // To trigger the X animation
+
+        // Prevent scrolling using Lenis to avoid ScrollTrigger layout shifts
+        if (document.body.classList.contains('menu-open')) {
+          if (globalLenis) globalLenis.stop();
         } else {
-          document.body.style.overflow = '';
+          if (globalLenis) globalLenis.start();
         }
       });
 
       // Close menu when clicking on links
-      navLinks.querySelectorAll('.nav-link').forEach(link => {
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+      mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
-          navLinks.classList.remove('active');
-          navToggle.classList.remove('open');
-          document.body.style.overflow = '';
+          document.body.classList.remove('menu-open');
+          navToggle.classList.remove('menu-open');
+          if (globalLenis) globalLenis.start();
         });
       });
     }
