@@ -27,3 +27,5 @@ docs/
 # Backup files
 *.bak
 *.tmp
+
+.builder/config/data.json

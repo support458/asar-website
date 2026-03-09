@@ -1,45 +1,198 @@
-﻿(() => {
-  /* =========================================================================
-     ASAR Consulting - Main JavaScript
-     Handles animations, smooth scrolling, mobile nav, and language routing.
-     ========================================================================= */
+﻿/**
+ * ASAR Website - Bundled Logic 2026
+ * Contains: Hero Gradient, Sheets Layout, and Main Interactive Elements
+ */
 
-  let globalLenis = null;
+(function () {
+  'use strict';
 
-  // 1. Initialize Lenis for Smooth Scrolling
-  function initLenis() {
-    if (typeof Lenis !== "undefined") {
-      globalLenis = new Lenis({
+  /* ==========================================================================
+     1. HERO GRADIENT (from hero-gradient.js)
+     ========================================================================== */
+  const initHeroGradient = () => {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width, height, dpr;
+    let animationFrame;
+
+    // Configuration
+    const config = {
+      colors: ['#0F0054', '#1A008F', '#2E00FF', '#080032'],
+      speed: 0.0008,
+      complexity: 0.45,
+      density: 1.2
+    };
+
+    // Geometry nodes
+    let nodes = [];
+    const nodeCount = 6;
+
+    class Node {
+      constructor() {
+        this.init();
+      }
+      init() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 1.5;
+        this.vy = (Math.random() - 0.5) * 1.5;
+        this.radius = Math.random() * (width * 0.5) + (width * 0.2);
+        this.color = config.colors[Math.floor(Math.random() * config.colors.length)];
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < -this.radius) this.x = width + this.radius;
+        if (this.x > width + this.radius) this.x = -this.radius;
+        if (this.y < -this.radius) this.y = height + this.radius;
+        if (this.y > height + this.radius) this.y = -this.radius;
+      }
+    }
+
+    const resize = () => {
+      dpr = window.devicePixelRatio || 1;
+      width = canvas.offsetWidth;
+      height = canvas.offsetHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+
+      nodes = [];
+      for (let i = 0; i < nodeCount; i++) nodes.push(new Node());
+    };
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'screen';
+      ctx.filter = 'blur(80px)';
+
+      nodes.forEach(node => {
+        node.update();
+        const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, node.radius);
+        grad.addColorStop(0, node.color);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationFrame = requestAnimationFrame(render);
+    };
+
+    window.addEventListener('resize', resize);
+    resize();
+    render();
+  };
+
+  /* ==========================================================================
+     2. SHEETS LAYOUT (from sheets.js)
+     ========================================================================== */
+  const initSheetsLayout = () => {
+    if (!document.body.classList.contains('sheets-enabled')) return;
+
+    // Initialize Lenis for Smooth Scroll globally if not exists
+    if (typeof Lenis !== 'undefined' && !window.lenis) {
+      window.lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
         wheelMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
         infinite: false,
       });
 
       function raf(time) {
-        globalLenis.raf(time);
+        window.lenis.raf(time);
         requestAnimationFrame(raf);
       }
       requestAnimationFrame(raf);
     }
-  }
 
-  // 2. Global Header Scroll Effect
-  function initHeader() {
-    const header = document.querySelector('.global-nav');
-    if (!header) return;
+    const sections = document.querySelectorAll('section');
+    const header = document.querySelector('.site-header');
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 20) {
-        header.classList.add('scrolled');
+    const updateSheets = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        const container = section.querySelector('.container');
+        if (!container) return;
+
+        // Simple stacking logic
+        if (rect.top <= 0 && rect.bottom > 0) {
+          const progress = Math.abs(rect.top) / viewportHeight;
+          const scale = 1 - (progress * 0.05);
+          const opacity = 1 - (progress * 0.3);
+          container.style.transform = `scale(${scale})`;
+          container.style.opacity = opacity;
+        } else {
+          container.style.transform = 'scale(1)';
+          container.style.opacity = '1';
+        }
+      });
+
+      // Header Color Switch check
+      const heroRect = document.querySelector('.hero')?.getBoundingClientRect();
+      if (heroRect && heroRect.bottom < 60) {
+        document.body.classList.add('header-dark');
+        document.body.classList.remove('header-light');
       } else {
-        header.classList.remove('scrolled');
+        document.body.classList.add('header-light');
+        document.body.classList.remove('header-dark');
       }
-    }, { passive: true });
-  }
+    };
 
-  // 3. Scroll Reveal Animations (Apple-like fade up)
-  function initReveal() {
+    window.addEventListener('scroll', updateSheets);
+    updateSheets();
+  };
+
+  /* ==========================================================================
+     3. MAIN INTERACTIVE ELEMENTS (from original main.js)
+     ========================================================================== */
+  const initMain = () => {
+    // Mobile Menu
+    const menuToggle = document.querySelector('.mobile-nav-toggle');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        document.body.classList.toggle('menu-open');
+        if (window.lenis) {
+          if (document.body.classList.contains('menu-open')) {
+            window.lenis.stop();
+          } else {
+            window.lenis.start();
+          }
+        }
+      });
+    }
+
+    // Close menu on link click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+        if (window.lenis) window.lenis.start();
+      });
+    });
+
+    // Language Switcher (Circular version logic)
+    const langSwitcher = document.querySelector('.lang-switcher');
+    if (langSwitcher) {
+      // Logic handled by CSS mostly, but could add active state tracking here
+    }
+
+    // Reveal on Scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -47,91 +200,16 @@
           observer.unobserve(entry.target);
         }
       });
-    }, {
-      root: null,
-      rootMargin: "0px 0px -10% 0px",
-      threshold: 0.1
-    });
+    }, observerOptions);
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  }
+  };
 
-  // 4. Language Switcher Routing
-  function initLangSwitcher() {
-    const dropdownLinks = document.querySelectorAll('.lang-dropdown a');
-    dropdownLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetLang = link.getAttribute('data-lang');
-        const currentPath = window.location.pathname; // e.g., /ru/solutions.html
-
-        // Remove the current language prefix and append the new one
-        const pathSegments = currentPath.split('/').filter(p => p);
-        if (pathSegments.length > 0) {
-          // Remove the first segment (which is the lang code)
-          pathSegments.shift();
-        }
-
-        const newPath = '/' + targetLang + '/' + pathSegments.join('/');
-        window.location.href = newPath;
-      });
-    });
-  }
-
-  // 5. Active Nav Highlighting
-  function initActiveNav() {
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      // Simple match: if current path contains the href (e.g., 'solutions.html')
-      if (href && currentPath.includes(href)) {
-        link.classList.add('active');
-      } else if (href === 'index.html' && (currentPath.endsWith('/ru/') || currentPath.endsWith('/en/') || currentPath.endsWith('/uz/') || currentPath.endsWith('/zh/'))) {
-        link.classList.add('active');
-      }
-    });
-  }
-
-  // 6. Mobile Menu Toggle
-  function initMobileNav() {
-    const navToggle = document.querySelector('.mobile-nav-toggle');
-
-    if (navToggle) {
-      navToggle.addEventListener('click', (e) => {
-        // Stop propagation in case there is another click handler on the body blocking it
-        e.stopPropagation();
-
-        document.body.classList.toggle('menu-open');
-        navToggle.classList.toggle('menu-open'); // To trigger the X animation
-
-        // Prevent scrolling using Lenis to avoid ScrollTrigger layout shifts
-        if (document.body.classList.contains('menu-open')) {
-          if (globalLenis) globalLenis.stop();
-        } else {
-          if (globalLenis) globalLenis.start();
-        }
-      });
-
-      // Close menu when clicking on links
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          document.body.classList.remove('menu-open');
-          navToggle.classList.remove('menu-open');
-          if (globalLenis) globalLenis.start();
-        });
-      });
-    }
-  }
-
+  /* Initialize everything on DOM Loaded */
   document.addEventListener('DOMContentLoaded', () => {
-    initLenis();
-    initHeader();
-    initReveal();
-    initLangSwitcher();
-    initActiveNav();
-    initMobileNav();
+    initHeroGradient();
+    initSheetsLayout();
+    initMain();
   });
+
 })();
